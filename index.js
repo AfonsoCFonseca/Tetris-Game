@@ -13,6 +13,7 @@ app.use('/dist', express.static(path.join(__dirname, '/dist')));
 app.use('/node_modules', express.static(path.join(__dirname, '/node_modules')));
 app.use('/vendor', express.static(path.join(__dirname, '/vendor')));
 app.use('/src', express.static(path.join(__dirname, '/src')));
+app.use('/assets', express.static(path.join(__dirname, '/assets')));
 
 app.use(bodyParser.json(
   {limit: '1mb'}
