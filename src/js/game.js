@@ -1,7 +1,7 @@
 var config = {
     type: Phaser.AUTO,
     width: 1200,
-    height: 1800,
+    height: 2500,
     scene: {
         preload: preload,
         create: create,
@@ -9,9 +9,8 @@ var config = {
     }
 };
 
-
 var game = new Phaser.Game(config);
-
+var map
 
 function preload(){
 
@@ -20,26 +19,20 @@ function preload(){
 
 function create(){
 
-    this.add.image( 50, 90, 'background' )
-    var r1 = this.add.rectangle( 50, 50, 16, 16, 0x6666ff);
+    map = new Map()
+    this.add.image( 10, 10, 'background' ).setOrigin(0,0)
+    goDeveloper( this )
 
-    createMap()
+    var ps = new PieceSet( this )
 }
 
-function createMap() {
-    var tetrisMap = []
-    var MAP_HEIGHT = 20
-    var MAP_WITDTH = 10
+function goDeveloper( mThis ){
+    const DEV_X = 550
+    const DEV_Y = 10
+    mThis.add.image( DEV_X, DEV_Y, 'background' ).setOrigin(0,0)
 
-    for( var i = 0; i < MAP_HEIGHT; i++ ) {
-        tetrisMap[i] = []
+    scoreText = mThis.add.text( DEV_X + 15, DEV_Y+ 15, map.getMap(), { fontSize: '30px', fill: '#000' });
 
-        for( var j = 0; j < MAP_WITDTH; j++ ){
-            tetrisMap[i][j] = 0
-        }
-    }
-
-    console.log( tetrisMap )
 }
 
 
