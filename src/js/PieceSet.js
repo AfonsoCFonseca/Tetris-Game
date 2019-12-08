@@ -1,15 +1,16 @@
-class PieceSet extends Map{
+class PieceSet {
 
-    constructor( mThis){
-    	super()   
+    constructor( ){
 
-        this.allPieces = [ "a","b","c","d","f","g" ]
+        this.allPieces = [ "a","b","c","d", "e","f","g" ]
+        this.pieceLetter = ""
+        this.piece = this.chooseRandomPiece()
+        this.pieceColor = this.getColor()
+        var { x, y } = map.getNewSetPiecePosition( this.piece ) 
 
-        var piece = this.chooseRandomPiece()
-        var { x, y } = map.getNewSetPiecePosition( piece ) 
         this.x = x
         this.y = y
-		mThis.add.rectangle( this.x, this.y, SET_PIECE_SIZE, SET_PIECE_SIZE, PIECE_SET_COLOR).setOrigin(0,0)
+        ps = this.piece
     }
 
     setPosition( x, y ){
@@ -24,11 +25,31 @@ class PieceSet extends Map{
     getPositionY(){
     	return this.y
     }
+        
+    getColor(){
+        switch( this.pieceLetter ){
+            case "a": 
+                return COLOR_PIECE_A
+            case "b": 
+                return COLOR_PIECE_B
+            case "c": 
+                return COLOR_PIECE_C 
+            case "d": 
+                return COLOR_PIECE_D 
+            case "e": 
+                return COLOR_PIECE_E
+            case "f": 
+                return COLOR_PIECE_F
+            case "g": 
+                return COLOR_PIECE_G
+
+        }
+    }
 
     chooseRandomPiece(){
         var rand = Phaser.Math.Between( 0, 6 )
-        var piece = this.allPieces[ rand ]
-        var pieceMap = toolbox( piece )
+        this.pieceLetter = this.allPieces[ rand ]
+        var pieceMap = toolbox( this.pieceLetter )
         return pieceMap
     }
 

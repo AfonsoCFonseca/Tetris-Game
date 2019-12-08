@@ -10,9 +10,9 @@ var config = {
 };
 
 var frameInterval = 1000
-
 var game = new Phaser.Game(config);
-var map
+var map = null
+var ps = null
 
 function preload(){
     this.load.image( 'background', 'assets/whiteBackground.png' ) 
@@ -20,20 +20,22 @@ function preload(){
 
 function create(){
 
-    map = new Map()
+    map = new Map( )
     this.add.image( 10, 10, 'background' ).setOrigin(0,0)
-    goDeveloperMap( this )
+    ps = new PieceSet( this)
+    map.mapDrawer( this )
 
-    var ps = new PieceSet( this )
-
+    drawDeveloperMap( this )
     frame( this )
 }
 
 function frame( mThis ){
+
     setInterval( () => {
 
         movePieces( mThis )
-        goDeveloperMap( mThis )
+        scoreText.setText( map.getMap() )
+        map.mapDrawer( mThis )
 
     }, frameInterval )
 }
@@ -50,11 +52,9 @@ function update(){
 
 
 
-function goDeveloperMap( mThis ){
-    const DEV_X = 550
-    const DEV_Y = 10
-    mThis.add.image( DEV_X, DEV_Y, 'background' ).setOrigin(0,0)
+function drawDeveloperMap( mThis ){
 
+    mThis.add.image( DEV_X, DEV_Y, 'background' ).setOrigin(0,0)
     scoreText = mThis.add.text( DEV_X + 15, DEV_Y+ 15, map.getMap(), { fontSize: '30px', fill: '#000' });
 
 }
