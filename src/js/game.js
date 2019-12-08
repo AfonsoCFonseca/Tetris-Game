@@ -9,11 +9,12 @@ var config = {
     }
 };
 
+var frameInterval = 1000
+
 var game = new Phaser.Game(config);
 var map
 
 function preload(){
-
     this.load.image( 'background', 'assets/whiteBackground.png' ) 
 }
 
@@ -21,12 +22,35 @@ function create(){
 
     map = new Map()
     this.add.image( 10, 10, 'background' ).setOrigin(0,0)
-    goDeveloper( this )
+    goDeveloperMap( this )
 
     var ps = new PieceSet( this )
+
+    frame( this )
 }
 
-function goDeveloper( mThis ){
+function frame( mThis ){
+    setInterval( () => {
+
+        movePieces( mThis )
+        goDeveloperMap( mThis )
+
+    }, frameInterval )
+}
+
+function movePieces( mThis ){
+
+}
+
+
+function update(){
+
+
+}
+
+
+
+function goDeveloperMap( mThis ){
     const DEV_X = 550
     const DEV_Y = 10
     mThis.add.image( DEV_X, DEV_Y, 'background' ).setOrigin(0,0)
@@ -34,7 +58,3 @@ function goDeveloper( mThis ){
     scoreText = mThis.add.text( DEV_X + 15, DEV_Y+ 15, map.getMap(), { fontSize: '30px', fill: '#000' });
 
 }
-
-
-function update(){}
-
