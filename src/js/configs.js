@@ -21,25 +21,25 @@ function toolbox( piece, position = "default" ){
 		case "a":
 			return pieceArot( position )
 			break;
-		case "b": 
+		case "b":
 			return pieceBrot( position )
 			break;
-		case "c": 
+		case "c":
 			return pieceCrot( position )
 			break;
-		case "d": 
+		case "d":
 			return pieceDrot( position )
 			break;
-		case "e": 
+		case "e":
 			return pieceErot( position )
 			break;
-		case "f": 
+		case "f":
 			return pieceFrot( position )
 			break;
-		case "g": 
+		case "g":
 			return pieceGrot( position )
 			break;
-		case "default": 
+		case "default":
 			console.log( "default value toolbox")
 			return pieceGrot( position )
 			break;
@@ -49,16 +49,16 @@ function toolbox( piece, position = "default" ){
 
 function pieceArot( state ){
 	switch( state ){
-		case "north":
-		case "south":
+		case "NORTH":
+		case "SOUTH":
 			return [
 				[1,0,0,0],
 				[1,0,0,0],
 				[1,0,0,0],
 				[1,0,0,0]
 			]
-		case "east": 
-		case "west": 
+		case "EAST":
+		case "WEST":
 			return [
 				[0,0,0,0],
 				[0,0,0,0],
@@ -77,28 +77,28 @@ function pieceArot( state ){
 
 function pieceBrot( state ){
 	switch( state ){
-		case "north":
+		case "NORTH":
 			return [
 				[0,0,0,0],
 				[0,0,1,0],
 				[0,0,1,0],
 				[0,1,1,0]
 			]
-		case "east": 
+		case "EAST":
 			return [
 				[0,0,0,0],
 				[0,0,0,0],
 				[0,1,0,0],
 				[0,1,1,1]
 			]
-		case "west": 
+		case "WEST":
 			return [
 				[0,0,0,0],
 				[0,1,1,0],
 				[0,1,0,0],
 				[0,1,0,0]
 			]
-		case "south": 
+		case "SOUTH":
 		default:
 			return [
 				[0,0,0,0],
@@ -111,16 +111,16 @@ function pieceBrot( state ){
 
 function pieceCrot( state ){
 	switch( state ){
-		case "south": 
-		case "north":
+		case "SOUTH":
+		case "NORTH":
 			return [
 				[0,0,0,0],
 				[0,0,0,0],
 				[0,1,1,0],
 				[1,1,0,0]
 			]
-		case "west": 
-		case "east": 
+		case "WEST":
+		case "EAST":
 		default:
 			return [
 				[0,0,0,0],
@@ -133,16 +133,16 @@ function pieceCrot( state ){
 
 function pieceDrot( state ){
 	switch( state ){
-		case "south": 
-		case "north":
+		case "SOUTH":
+		case "NORTH":
 			return [
 				[0,0,0,0],
 				[0,0,0,0],
 				[0,1,1,0],
 				[0,0,1,1]
 			]
-		case "west": 
-		case "east": 
+		case "WEST":
+		case "EAST":
 		default:
 			return [
 				[0,0,0,0],
@@ -155,28 +155,28 @@ function pieceDrot( state ){
 
 function pieceErot( state ){
 	switch( state ){
-		case "north":
+		case "NORTH":
 			return [
 				[0,0,0,0],
 				[0,0,0,0],
 				[0,1,0,0],
 				[1,1,1,0]
 			]
-		case "east": 
+		case "EAST":
 			return [
 				[0,0,0,0],
 				[1,0,0,0],
 				[1,1,0,0],
 				[1,0,0,0]
 			]
-		case "west": 
+		case "WEST":
 			return [
 				[0,0,0,0],
 				[0,0,0,0],
 				[1,1,1,0],
 				[0,1,0,0]
 			]
-		case "south": 
+		case "SOUTH":
 		default:
 			return [
 				[0,0,0,0],
@@ -189,28 +189,28 @@ function pieceErot( state ){
 
 function pieceFrot( state ){
 	switch( state ){
-		case "north":
+		case "NORTH":
 			return [
 				[0,0,0,0],
 				[1,0,0,0],
 				[1,0,0,0],
 				[1,1,0,0]
 			]
-		case "east": 
+		case "EAST":
 			return [
 				[0,0,0,0],
 				[0,0,0,0],
 				[1,1,1,0],
 				[1,0,0,0]
 			]
-		case "west": 
+		case "WEST":
 			return [
 				[0,0,0,0],
 				[1,1,0,0],
 				[0,1,0,0],
 				[0,1,0,0]
 			]
-		case "south": 
+		case "SOUTH":
 			return [
 				[0,0,0,0],
 				[0,0,0,0],
@@ -228,12 +228,45 @@ function pieceFrot( state ){
 }
 
 function pieceGrot( state ){
-	
+
 	return [
 		[0,0,0,0],
 		[0,0,0,0],
 		[0,1,1,0],
 		[0,1,1,0]
 	]
-		
+
+}
+
+
+function turnRightOriention( orientation ){
+	switch( orientation ) {
+		case "NORTH" :
+			return "EAST"
+		case "EAST" :
+			return "SOUTH"
+		case "WEST" :
+			return "NORTH"
+		case "SOUTH" :
+			return "WEST"
+		default:
+			console.log("default")
+
+	}
+}
+
+function turnLeftOriention(){
+	switch( orientation ) {
+		case "NORTH" :
+			return "WEST"
+		case "EAST" :
+			return "NORTH"
+		case "WEST" :
+			return "SOUTH"
+		case "SOUTH" :
+			return "EAST"
+		default:
+			console.log("default")
+
+	}
 }

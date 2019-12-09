@@ -1,12 +1,14 @@
 class Map {
-	
-	constructor( ){
+
+	constructor( mThis ){
 
 		this.yArrayLength = 20
 		this.xArrayLength = 10
 		this.pieceSet = null;
 		this.tetrisMap = []
 		this.createMap()
+		this.groupOfSquares = []
+		this.mThis = mThis
 
 	}
 
@@ -39,10 +41,9 @@ class Map {
 
 			for( var j = 0; j < 4; j++ ){ //Drawing Y
 
-				var arrValue = pieceMap[contadorPieceY][contadorPieceX] == 0 ? 1 : 2
+				var valueMap = converValuesForSetPiece( pieceMap[contadorPieceY][contadorPieceX] )
+				this.setMapPosition( j, i, valueMap )
 				contadorPieceY++
-
-				this.setMapPosition( j, i, arrValue )
 			}
 			contadorPieceY = 0
 			contadorPieceX++
@@ -54,21 +55,43 @@ class Map {
 		return { x, y }
 	}
 
-	setMapPosition( d1, d2, value ){
+	turnSetPositionOnMap( x, y, pieceMap ){
+		var { xArr, yArr } = convertFromWidthToMap( x, y )
 
-		this.tetrisMap[ d1 ][ d2 ] = value 
+		var contadorX = 0
+		var contadorY = 0
+
+		for( var j = xArr; j < xArr + 4 ; j++ ){
+			for( var i = yArr; i < yArr + 4 ; i++ ){
+
+					var valueMap = converValuesForSetPiece( pieceMap[contadorY][contadorX] )
+					this.setMapPosition( i, j, valueMap )
+					contadorY++
+
+			}
+			contadorY = 0;
+			contadorX++
+		}
+
 	}
 
-	mapDrawer( mThis ){
+///////// SETTER /////////
+	setMapPosition( d1, d2, value ){
+		this.tetrisMap[ d1 ][ d2 ] = value
+	}
 
-		for( var i = 0; i < this.yArrayLength; i++ ) {
+///////// MAP DRAWER /////////
+	mapDrawer( ){
 
-	        for( var j = 0; j < this.xArrayLength; j++ ){
+		this.mThis.imageGroup.clear(true);
 
-	        	if( this.tetrisMap[i][j] == "2" ){
-	        		var x = ( j * PIECE_SIZE ) + MAP_MARGIN
-	        		var y = ( i * PIECE_SIZE ) + MAP_MARGIN
-	        		mThis.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, ps.pieceColor ).setOrigin(0,0)
+		for( var i = 0; i < this.xArrayLength; i++ ){
+						for( var j = 0; j < this.yArrayLength; j++ ) {
+
+	        	if( this.tetrisMap[j][i] == "2" ){
+							var { x , y } = convertFromMapToWidth( i, j )
+	        		var square = this.mThis.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, ps.pieceColor ).setOrigin(0,0)
+							this.mThis.imageGroup.add(square);
 	        	}
 
 	        }

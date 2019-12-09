@@ -1,12 +1,15 @@
 class PieceSet {
 
-    constructor( ){
+    constructor( mThis ){
 
         this.allPieces = [ "a","b","c","d", "e","f","g" ]
         this.pieceLetter = ""
         this.piece = this.chooseRandomPiece()
         this.pieceColor = this.getColor()
-        var { x, y } = map.getNewSetPiecePosition( this.piece ) 
+
+        this.pieceOriention = "NORTH"
+
+        var { x, y } = map.getNewSetPiecePosition( this.piece )
 
         this.x = x
         this.y = y
@@ -25,25 +28,40 @@ class PieceSet {
     getPositionY(){
     	return this.y
     }
-        
+
     getColor(){
         switch( this.pieceLetter ){
-            case "a": 
+            case "a":
                 return COLOR_PIECE_A
-            case "b": 
+            case "b":
                 return COLOR_PIECE_B
-            case "c": 
-                return COLOR_PIECE_C 
-            case "d": 
-                return COLOR_PIECE_D 
-            case "e": 
+            case "c":
+                return COLOR_PIECE_C
+            case "d":
+                return COLOR_PIECE_D
+            case "e":
                 return COLOR_PIECE_E
-            case "f": 
+            case "f":
                 return COLOR_PIECE_F
-            case "g": 
+            case "g":
                 return COLOR_PIECE_G
 
         }
+    }
+
+    turn( side ){
+
+      if( side == "left" ){
+        this.pieceOriention = turnLeftOriention( this.pieceOriention )
+        this.piece = toolbox( this.pieceLetter, this.pieceOriention )
+        map.turnSetPositionOnMap( this.x, this.y, this.piece )
+      }
+      else if( side == "right" ){
+        this.pieceOriention = turnRightOriention( this.pieceOriention )
+        this.piece = toolbox( this.pieceLetter, this.pieceOriention )
+        map.turnSetPositionOnMap( this.x, this.y, this.piece )
+      }
+
     }
 
     chooseRandomPiece(){

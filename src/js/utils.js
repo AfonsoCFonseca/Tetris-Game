@@ -1,38 +1,16 @@
+///////// CONVERTER /////////
+	function convertFromMapToWidth( xArr, yArr ){
+    var x = ( xArr * PIECE_SIZE ) + MAP_MARGIN
+    var y = ( yArr * PIECE_SIZE ) + MAP_MARGIN
+		return { x, y }
+	}
 
-/******************        DATABASE         *****************/
+	function convertFromWidthToMap( x, y ){
+    var xArr = ( x - MAP_MARGIN ) / PIECE_SIZE
+    var yArr = ( y - MAP_MARGIN ) / PIECE_SIZE
+		return { xArr, yArr }
+	}
 
-var getFirebaseData = function(functionName, callback){
-  $.ajax({
-    url: '/'+functionName,
-    dateType: 'json',
-    success: function(data){
-      callback(data);
-    },
-    error : function( err ){
-      console.log("err")
-      console.log(err)
-      if( err != null ){
-        logginOut();
-      }
-    }
-  })
-}
-var postFirebaseData = function(obj, functionName, callback){
-  $.ajax({
-    url: '/'+functionName,
-    type: 'POST',
-    dataType: 'json',
-    contentType: "application/json; charset=utf-8",
-    data: JSON.stringify(obj),
-    success: function(resultData) {
-      callback(resultData);
-    },
-    error : function( err ){
-      console.log("err")
-      console.log(err)
-      if( err != null ){
-        logginOut();
-      }
-    }
-  })
-}
+	function converValuesForSetPiece( piece ){
+		return piece == 1 ? 2 : 1
+	}
