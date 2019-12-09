@@ -83,7 +83,7 @@ class Map {
 ///////// MAP DRAWER /////////
 	mapDrawer( ){
 
-		this.mThis.imageGroup.clear(true);
+		this.mThis.imageGroup.clear(true)
 
 		for( var i = 0; i < this.xArrayLength; i++ ){
 						for( var j = 0; j < this.yArrayLength; j++ ) {

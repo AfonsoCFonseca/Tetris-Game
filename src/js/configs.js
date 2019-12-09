@@ -15,7 +15,7 @@ const COLOR_PIECE_F = 0xF0A000
 const COLOR_PIECE_G = 0xF0F000
 
 
-function toolbox( piece, position = "default" ){
+function toolbox( piece, position = "NORTH" ){
 
 	switch( piece ){
 		case "a":
@@ -91,14 +91,14 @@ function pieceBrot( state ){
 				[0,1,0,0],
 				[0,1,1,1]
 			]
-		case "WEST":
+		case "SOUTH":
 			return [
 				[0,0,0,0],
 				[0,1,1,0],
 				[0,1,0,0],
 				[0,1,0,0]
 			]
-		case "SOUTH":
+		case "WEST":
 		default:
 			return [
 				[0,0,0,0],
@@ -169,21 +169,22 @@ function pieceErot( state ){
 				[1,1,0,0],
 				[1,0,0,0]
 			]
-		case "WEST":
+		case "SOUTH":
 			return [
 				[0,0,0,0],
-				[0,0,0,0],
 				[1,1,1,0],
-				[0,1,0,0]
+				[0,1,0,0],
+				[0,0,0,0]
 			]
-		case "SOUTH":
+		case "WEST":
 		default:
 			return [
 				[0,0,0,0],
-				[0,1,0,0],
-				[1,1,0,0],
-				[0,1,0,0]
+				[0,0,1,0],
+				[0,1,1,0],
+				[0,0,1,0]
 			]
+
 	}
 }
 
@@ -203,19 +204,19 @@ function pieceFrot( state ){
 				[1,1,1,0],
 				[1,0,0,0]
 			]
-		case "WEST":
+		case "SOUTH":
 			return [
 				[0,0,0,0],
 				[1,1,0,0],
 				[0,1,0,0],
 				[0,1,0,0]
 			]
-		case "SOUTH":
+		case "WEST":
 			return [
 				[0,0,0,0],
 				[0,0,0,0],
-				[0,0,0,1],
-				[0,1,1,1]
+				[0,0,1,0],
+				[1,1,1,0]
 			]
 		default:
 			return [
@@ -255,7 +256,7 @@ function turnRightOriention( orientation ){
 	}
 }
 
-function turnLeftOriention(){
+function turnLeftOriention( orientation ){
 	switch( orientation ) {
 		case "NORTH" :
 			return "WEST"
