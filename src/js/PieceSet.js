@@ -2,10 +2,11 @@ class PieceSet {
 
     constructor( mThis ){
 
-        this.allPieces = [ "a","b","c","d", "e","f","g" ]
-        this.pieceLetter = ""
+        this.allPieces = [ "blue","dark_blue","green","purple", "red","orange","yellow" ]
+        this.pieceColor = ""
         this.piece = this.chooseRandomPiece()
         this.pieceColor = this.getColor()
+        this.next_piece_name = this.allPieces[ Phaser.Math.Between( 0, 6 ) ]
 
         this.pieceOriention = "NORTH"
 
@@ -30,20 +31,20 @@ class PieceSet {
     }
 
     getColor(){
-        switch( this.pieceLetter ){
-            case "a":
+        switch( this.pieceColor ){
+            case "blue":
                 return COLOR_PIECE_A
-            case "b":
+            case "dark_blue":
                 return COLOR_PIECE_B
-            case "c":
+            case "green":
                 return COLOR_PIECE_C
-            case "d":
+            case "purple":
                 return COLOR_PIECE_D
-            case "e":
+            case "red":
                 return COLOR_PIECE_E
-            case "f":
+            case "orange":
                 return COLOR_PIECE_F
-            case "g":
+            case "yellow":
                 return COLOR_PIECE_G
 
         }
@@ -53,12 +54,12 @@ class PieceSet {
 
       if( side == "left" ){
         this.pieceOriention = turnLeftOriention( this.pieceOriention )
-        this.piece = toolbox( this.pieceLetter, this.pieceOriention )
+        this.piece = toolbox( this.pieceColor, this.pieceOriention )
         map.movementPieceSet( this.x, this.y, this.piece )
       }
       else if( side == "right" ){
         this.pieceOriention = turnRightOriention( this.pieceOriention )
-        this.piece = toolbox( this.pieceLetter, this.pieceOriention )
+        this.piece = toolbox( this.pieceColor, this.pieceOriention )
         map.movementPieceSet( this.x, this.y, this.piece )
       }
 
@@ -84,10 +85,8 @@ class PieceSet {
     }
 
     chooseRandomPiece(){
-        var rand = Phaser.Math.Between( 0, 6 )
-        this.pieceLetter = this.allPieces[ rand ]
-        var pieceMap = toolbox( this.pieceLetter )
-        return pieceMap
+        this.pieceColor = this.allPieces[ Phaser.Math.Between( 0, 6 ) ]
+        return toolbox( this.pieceColor )
     }
 
 }

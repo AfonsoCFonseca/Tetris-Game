@@ -18,25 +18,25 @@ const COLOR_PIECE_G = 0xF0F000
 function toolbox( piece, position = "NORTH" ){
 
 	switch( piece ){
-		case "a":
+		case "blue":
 			return pieceArot( position )
 			break;
-		case "b":
+		case "dark_blue":
 			return pieceBrot( position )
 			break;
-		case "c":
+		case "green":
 			return pieceCrot( position )
 			break;
-		case "d":
+		case "purple":
 			return pieceDrot( position )
 			break;
-		case "e":
+		case "red":
 			return pieceErot( position )
 			break;
-		case "f":
+		case "orange":
 			return pieceFrot( position )
 			break;
-		case "g":
+		case "yellow":
 			return pieceGrot( position )
 			break;
 		case "default":

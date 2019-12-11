@@ -2,20 +2,33 @@ var keyD
 var keyA
 var keyW
 
+var devArrayText
+var scoreText
+var levelText
+
 var frameInterval = 1000
 var map = null
 var ps = null
-var scoreText
 
 class GameScene extends Phaser.Scene {
   constructor(){
     super()
+
   }
 
   preload(){
 
     this.imageGroup = this.add.group();
     this.load.image( 'background', 'assets/whiteBackground.png' )
+
+    this.load.image( 'orange', 'assets/orange.png' )
+    this.load.image( 'red', 'assets/red.png' )
+    this.load.image( 'purple', 'assets/purple.png' )
+    this.load.image( 'blue', 'assets/blue.png' )
+    this.load.image( 'dark_blue', 'assets/dark_blue.png' )
+    this.load.image( 'yellow', 'assets/yellow.png' )
+    this.load.image( 'green', 'assets/green.png' )
+
 
   }
 
@@ -30,7 +43,9 @@ class GameScene extends Phaser.Scene {
     keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
+    this.drawGui()
     this.drawDeveloperMap( )
+
     this.frame( )
 
   }
@@ -58,7 +73,7 @@ class GameScene extends Phaser.Scene {
       setInterval( () => {
 
           this.downCicle( )
-          scoreText.setText( map.getMap() )
+          devArrayText.setText( map.getMap() )
           map.mapDrawer( this )
 
       }, frameInterval )
@@ -71,18 +86,32 @@ class GameScene extends Phaser.Scene {
 
   }
 
+
+  drawGui(){
+
+    this.add.rectangle( DEV_X + 10, DEV_Y + 10, 110, 100, 0xFFFFFF ).setOrigin(0,0)
+    this.add.image( DEV_X + 10, DEV_Y + 10 , ps.next_piece_name ).setOrigin(0,0)
+    scoreText = this.add.text( DEV_X + 15, DEV_Y+ 160, "Level: 1", { fontSize: '20px', fill: '#FFFFFF' });
+    levelText = this.add.text( DEV_X + 15, DEV_Y+ 130, "Score: 1", { fontSize: '20px', fill: '#FFFFFF' });
+
+  }
+
   drawDeveloperMap( ){
 
-      this.add.image( DEV_X, DEV_Y, 'background' ).setOrigin(0,0)
-      scoreText = this.add.text( DEV_X + 15, DEV_Y+ 15, map.getMap(), { fontSize: '30px', fill: '#000' });
+      //this.add.image( DEV_X, DEV_Y, 'background' ).setOrigin(0,0)
+      devArrayText = this.add.text( DEV_X + 150, DEV_Y+ 15, map.getMap(), { fontSize: '15px', fill: '#FFFFFF' });
 
   }
 }
 
 var config = {
     type: Phaser.AUTO,
-    width: 1200,
-    height: 2500,
+    width: '150%',
+    height: '150%',
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
     scene: GameScene
 };
 
