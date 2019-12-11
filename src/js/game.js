@@ -1,5 +1,6 @@
 var keyD
 var keyA
+var keyW
 
 var frameInterval = 1000
 var map = null
@@ -27,6 +28,7 @@ class GameScene extends Phaser.Scene {
 
     keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
     this.drawDeveloperMap( )
     this.frame( )
@@ -35,15 +37,17 @@ class GameScene extends Phaser.Scene {
 
   update(){
 
+    if (Phaser.Input.Keyboard.JustDown(keyW))
+    {
+      ps.turn('right')
+    }
     if (Phaser.Input.Keyboard.JustDown(keyD))
     {
-      ps.turn( "right" )
-      map.mapDrawer()
+      ps.move('right')
     }
     if (Phaser.Input.Keyboard.JustDown(keyA))
     {
-      ps.turn( "left" )
-      map.mapDrawer()
+      ps.move('left')
     }
 
   }
@@ -53,14 +57,17 @@ class GameScene extends Phaser.Scene {
 
       setInterval( () => {
 
-          this.movePieces( )
+          this.downCicle( )
           scoreText.setText( map.getMap() )
           map.mapDrawer( this )
 
       }, frameInterval )
   }
 
-  movePieces( ){
+  downCicle( ){
+
+    ps.downCicle()
+    map.downCicle()
 
   }
 

@@ -11,8 +11,8 @@ class PieceSet {
 
         var { x, y } = map.getNewSetPiecePosition( this.piece )
 
-        this.x = x
-        this.y = y
+        this.setPosition( x, y )
+
         ps = this.piece
     }
 
@@ -54,14 +54,33 @@ class PieceSet {
       if( side == "left" ){
         this.pieceOriention = turnLeftOriention( this.pieceOriention )
         this.piece = toolbox( this.pieceLetter, this.pieceOriention )
-        map.turnSetPositionOnMap( this.x, this.y, this.piece )
+        map.movementPieceSet( this.x, this.y, this.piece )
       }
       else if( side == "right" ){
         this.pieceOriention = turnRightOriention( this.pieceOriention )
         this.piece = toolbox( this.pieceLetter, this.pieceOriention )
-        map.turnSetPositionOnMap( this.x, this.y, this.piece )
+        map.movementPieceSet( this.x, this.y, this.piece )
       }
 
+    }
+
+    move( side ){
+
+      if( side == "left" ){
+        this.setPosition( this.x - 50 ,this.y )
+        map.movementPieceSet( this.x, this.y, this.piece )
+      }
+      else if( side == "right" ){
+        this.setPosition( this.x + 50 ,this.y )
+        map.movementPieceSet( this.x, this.y, this.piece )
+      }
+
+    }
+
+    downCicle( ){
+      var { xArr, yArr } = convertFromWidthToMap( this.x, this.y )
+      var { x, y } = convertFromMapToWidth( xArr, ++yArr )
+      this.setPosition( x, y )
     }
 
     chooseRandomPiece(){

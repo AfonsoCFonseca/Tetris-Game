@@ -21,6 +21,7 @@ class Map {
 	            this.tetrisMap[i][j] = 0
 	        }
 	    }
+
 	}
 
 	getMap(){
@@ -55,17 +56,31 @@ class Map {
 		return { x, y }
 	}
 
-	turnSetPositionOnMap( x, y, pieceMap ){
+	clearMap(){
+
+		for( var i = 0; i < this.yArrayLength; i++ ) {
+				this.tetrisMap[i] = []
+
+				for( var j = 0; j < this.xArrayLength; j++ ){
+						this.tetrisMap[i][j] = 0
+				}
+		}
+
+	}
+
+	movementPieceSet( x, y, pieceMap ){
+		this.clearMap()
+
 		var { xArr, yArr } = convertFromWidthToMap( x, y )
 
 		var contadorX = 0
 		var contadorY = 0
 
-		for( var j = xArr; j < xArr + 4 ; j++ ){
-			for( var i = yArr; i < yArr + 4 ; i++ ){
+		for( var i = xArr; i < xArr + 4 ; i++ ){
+			for( var j = yArr; j < yArr + 4 ; j++ ){
 
 					var valueMap = converValuesForSetPiece( pieceMap[contadorY][contadorX] )
-					this.setMapPosition( i, j, valueMap )
+					this.setMapPosition( j, i, valueMap )
 					contadorY++
 
 			}
@@ -73,6 +88,7 @@ class Map {
 			contadorX++
 		}
 
+		this.mapDrawer()
 	}
 
 ///////// SETTER /////////
@@ -96,6 +112,23 @@ class Map {
 
 	        }
 	    }
+
+	}
+
+///////// MOVEMENT /////////
+	downCicle(){
+
+		var olderState = null
+		var newState = [ 0,0,0,0,0,0,0,0,0,0 ]
+
+		for( var i = 0; i < this.yArrayLength; i++ ) {
+
+				olderState = this.tetrisMap[i]
+				this.tetrisMap[i] = newState
+				newState = olderState
+
+
+		}
 
 	}
 
