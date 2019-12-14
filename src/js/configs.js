@@ -240,32 +240,16 @@ function pieceGrot( state ){
 }
 
 
-function turnRightOriention( orientation ){
+function turnOriention( side, orientation ){
 	switch( orientation ) {
 		case "NORTH" :
-			return "EAST"
+			return side == "right" ? "EAST" : "WEST"
 		case "EAST" :
-			return "SOUTH"
+			return side == "right" ? "SOUTH" : "NORTH"
 		case "WEST" :
-			return "NORTH"
+			return side == "right" ? "NORTH" : "SOUTH"
 		case "SOUTH" :
-			return "WEST"
-		default:
-			console.log("default")
-
-	}
-}
-
-function turnLeftOriention( orientation ){
-	switch( orientation ) {
-		case "NORTH" :
-			return "WEST"
-		case "EAST" :
-			return "NORTH"
-		case "WEST" :
-			return "SOUTH"
-		case "SOUTH" :
-			return "EAST"
+			return side == "right" ? "WEST" : "EAST"
 		default:
 			console.log("default")
 

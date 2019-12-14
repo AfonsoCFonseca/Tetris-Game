@@ -11,6 +11,6 @@
 		return { xArr, yArr }
 	}
 
-	function converValuesForSetPiece( piece ){
-		return piece == 1 ? 2 : 1
+	function convertValuesForSetPiece( piece ){
+		return piece == 1 ? 2: 1
 	}

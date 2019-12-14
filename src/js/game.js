@@ -6,7 +6,7 @@ var devArrayText
 var scoreText
 var levelText
 
-var frameInterval = 1000
+var frameInterval = 100
 var map = null
 var ps = null
 
@@ -81,6 +81,12 @@ class GameScene extends Phaser.Scene {
 
   downCicle( ){
 
+    if( map.isDownLimit() == true ){
+      map.tearDownPiece()
+      ps.createAnotherPiece()
+      return
+    }
+
     ps.downCicle()
     map.downCicle()
 
@@ -107,7 +113,7 @@ class GameScene extends Phaser.Scene {
 var config = {
     type: Phaser.AUTO,
     width: '150%',
-    height: '150%',
+    height: '180%',
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH

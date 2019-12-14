@@ -42,7 +42,7 @@ class Map {
 
 			for( var j = 0; j < 4; j++ ){ //Drawing Y
 
-				var valueMap = converValuesForSetPiece( pieceMap[contadorPieceY][contadorPieceX] )
+				var valueMap = convertValuesForSetPiece( pieceMap[contadorPieceY][contadorPieceX] )
 				this.setMapPosition( j, i, valueMap )
 				contadorPieceY++
 			}
@@ -62,15 +62,48 @@ class Map {
 				this.tetrisMap[i] = []
 
 				for( var j = 0; j < this.xArrayLength; j++ ){
-						this.tetrisMap[i][j] = 0
+					if( this.tetrisMap[i][j] == 3 ) return
+
+					this.tetrisMap[i][j] = 0
 				}
 		}
 
 	}
 
-	movementPieceSet( x, y, pieceMap ){
-		this.clearMap()
+	isSideLimit( side ){
 
+		for( var i = 0; i < this.yArrayLength; i++ ) {
+			for( var j = 0; j < this.xArrayLength; j++ ){
+				if( this.tetrisMap[i][ side == 'right' ? this.xArrayLength - 1 : 0 ] == 2 )
+					return true
+			}
+		}
+		return false
+
+	}
+
+	isDownLimit(){
+
+		var { xArr, yArr } = convertFromWidthToMap( ps.x, ps.y )
+
+		// Contact piece with piece
+		for( var j = 0; j < 4; j++ ){
+			if( this.getMapPosition( xArr + j ,yArr + 4 ) == "2"
+				&& this.getMapPosition( xArr + j ,yArr + 5 ) == "2"  )
+				return true
+		}
+
+		// Contact piece with ground
+		for( var i = 0; i < this.xArrayLength; i++ ){
+			if( this.tetrisMap[ this.yArrayLength - 1 ][i] == 2 )
+				return true
+		}
+		return false
+	}
+
+	movementPieceSet( x, y, pieceMap ){
+
+		this.clearMap()
 		var { xArr, yArr } = convertFromWidthToMap( x, y )
 
 		var contadorX = 0
@@ -79,7 +112,7 @@ class Map {
 		for( var i = xArr; i < xArr + 4 ; i++ ){
 			for( var j = yArr; j < yArr + 4 ; j++ ){
 
-					var valueMap = converValuesForSetPiece( pieceMap[contadorY][contadorX] )
+					var valueMap = convertValuesForSetPiece( pieceMap[contadorY][contadorX] )
 					this.setMapPosition( j, i, valueMap )
 					contadorY++
 
@@ -89,6 +122,17 @@ class Map {
 		}
 
 		this.mapDrawer()
+	}
+
+	tearDownPiece(){
+
+		for( var i = 0; i < this.yArrayLength; i++ ) {
+			for( var j = 0; j < this.xArrayLength; j++ ){
+				if( this.tetrisMap[i][j] == "2" )
+					this.tetrisMap[i][j] = "3"
+			}
+		}
+
 	}
 
 ///////// SETTER /////////
@@ -106,7 +150,12 @@ class Map {
 
 	        	if( this.tetrisMap[j][i] == "2" ){
 							var { x , y } = convertFromMapToWidth( i, j )
-	        		var square = this.mThis.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, ps.pieceColor ).setOrigin(0,0)
+	        		var square = this.mThis.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, ps.pieceColorHash ).setOrigin(0,0)
+							this.mThis.imageGroup.add(square);
+	        	}
+						if( this.tetrisMap[j][i] == "3" ){
+							var { x , y } = convertFromMapToWidth( i, j )
+	        		var square = this.mThis.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, 0x000000 ).setOrigin(0,0)
 							this.mThis.imageGroup.add(square);
 	        	}
 
@@ -123,9 +172,16 @@ class Map {
 
 		for( var i = 0; i < this.yArrayLength; i++ ) {
 
-				olderState = this.tetrisMap[i]
-				this.tetrisMap[i] = newState
-				newState = olderState
+			olderState = this.tetrisMap[i]
+
+			for( var j = 0; j < this.xArrayLength; j++ ) {
+				if( olderState[j] == "3" ){
+					newState[j] = "3"
+				}
+			}
+
+			this.tetrisMap[i] = newState
+			newState = olderState
 
 
 		}

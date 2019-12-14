@@ -3,18 +3,16 @@ class PieceSet {
     constructor( mThis ){
 
         this.allPieces = [ "blue","dark_blue","green","purple", "red","orange","yellow" ]
-        this.pieceColor = ""
+        this.pieceColor;
         this.piece = this.chooseRandomPiece()
-        this.pieceColor = this.getColor()
+        this.pieceColorHash = this.getColor()
         this.next_piece_name = this.allPieces[ Phaser.Math.Between( 0, 6 ) ]
-
         this.pieceOriention = "NORTH"
 
         var { x, y } = map.getNewSetPiecePosition( this.piece )
 
         this.setPosition( x, y )
 
-        ps = this.piece
     }
 
     setPosition( x, y ){
@@ -53,25 +51,37 @@ class PieceSet {
     turn( side ){
 
       if( side == "left" ){
-        this.pieceOriention = turnLeftOriention( this.pieceOriention )
+        this.pieceOriention = turnOriention( "left", this.pieceOriention )
         this.piece = toolbox( this.pieceColor, this.pieceOriention )
         map.movementPieceSet( this.x, this.y, this.piece )
       }
       else if( side == "right" ){
-        this.pieceOriention = turnRightOriention( this.pieceOriention )
+        this.pieceOriention = turnOriention( "right", this.pieceOriention )
         this.piece = toolbox( this.pieceColor, this.pieceOriention )
         map.movementPieceSet( this.x, this.y, this.piece )
       }
 
     }
 
+    createAnotherPiece(){
+      this.piece = this.chooseRandomPiece()
+      this.pieceColorHash = this.getColor()
+      this.next_piece_name = this.allPieces[ Phaser.Math.Between( 0, 6 ) ]
+      this.pieceOriention = "NORTH"
+
+      var { x, y } = map.getNewSetPiecePosition( this.piece )
+
+      this.setPosition( x, y )
+
+    }
+
     move( side ){
 
-      if( side == "left" ){
+      if( side == "left" && !map.isSideLimit( 'left' ) ){
         this.setPosition( this.x - 50 ,this.y )
         map.movementPieceSet( this.x, this.y, this.piece )
       }
-      else if( side == "right" ){
+      else if( side == "right" && !map.isSideLimit( 'right' ) ){
         this.setPosition( this.x + 50 ,this.y )
         map.movementPieceSet( this.x, this.y, this.piece )
       }
@@ -85,8 +95,9 @@ class PieceSet {
     }
 
     chooseRandomPiece(){
-        this.pieceColor = this.allPieces[ Phaser.Math.Between( 0, 6 ) ]
-        return toolbox( this.pieceColor )
+      this.pieceColor = this.allPieces[ Phaser.Math.Between( 0, 6 ) ]
+      this.piece = toolbox( this.pieceColor, this.pieceOriention )
+      return this.piece
     }
 
 }
