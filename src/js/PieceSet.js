@@ -1,6 +1,6 @@
 class PieceSet {
 
-    constructor( mThis ){
+    constructor( scene ){
 
         this.allPieces = [ "blue","dark_blue","green","purple", "red","orange","yellow" ]
         this.pieceColor;
@@ -8,24 +8,24 @@ class PieceSet {
         this.pieceColorHash = this.getColor()
         this.next_piece_name = this.allPieces[ Phaser.Math.Between( 0, 6 ) ]
         this.pieceOriention = "NORTH"
+        this.scene = scene
 
         var { x, y } = map.getNewSetPiecePosition( this.piece )
+        var { xArr, yArr } = convertFromWidthToMap( x, y )
+        this.xArr = xArr
+        this.yArr = yArr
+
 
         this.setPosition( x, y )
 
     }
 
     setPosition( x, y ){
-    	this.x = x
-    	this.y = y
-    }
-
-    getPositionX(){
-    	return this.x
-    }
-
-    getPositionY(){
-    	return this.y
+        this.x = x
+        this.y = y
+        var { xArr, yArr } = convertFromWidthToMap( x, y )
+        this.xArr = xArr
+        this.yArr = yArr
     }
 
     getColor(){
@@ -64,14 +64,19 @@ class PieceSet {
     }
 
     createAnotherPiece(){
-      this.piece = this.chooseRandomPiece()
-      this.pieceColorHash = this.getColor()
-      this.next_piece_name = this.allPieces[ Phaser.Math.Between( 0, 6 ) ]
-      this.pieceOriention = "NORTH"
 
-      var { x, y } = map.getNewSetPiecePosition( this.piece )
+        this.pieceColor = this.next_piece_name 
+        this.piece = toolbox( this.next_piece_name, "NORTH" )
+        this.pieceColorHash = this.getColor()
+        this.next_piece_name = this.allPieces[ Phaser.Math.Between( 0, 6 ) ]
+        this.pieceOriention = "NORTH"
 
-      this.setPosition( x, y )
+        if( nextPieceImage != null ) nextPieceImage.destroy()
+        nextPieceImage = this.scene.add.image( DEV_X + 10, DEV_Y + 10 , this.next_piece_name ).setOrigin(0,0)
+
+        var { x, y } = map.getNewSetPiecePosition( this.piece )
+
+        this.setPosition( x, y )
 
     }
 

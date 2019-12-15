@@ -5,6 +5,7 @@ var keyW
 var devArrayText
 var scoreText
 var levelText
+var nextPieceImage
 
 var frameInterval = 100
 var map = null
@@ -92,19 +93,23 @@ class GameScene extends Phaser.Scene {
 
   }
 
+  addNextPieceImage( next_piece_name ){
+    if( nextPieceImage != null ) nextPieceImage.remove()
+    nextPieceImage = this.add.image( DEV_X + 10, DEV_Y + 10 , next_piece_name ).setOrigin(0,0)
+  }
+  
 
   drawGui(){
 
     this.add.rectangle( DEV_X + 10, DEV_Y + 10, 110, 100, 0xFFFFFF ).setOrigin(0,0)
-    this.add.image( DEV_X + 10, DEV_Y + 10 , ps.next_piece_name ).setOrigin(0,0)
+    this.addNextPieceImage( ps.next_piece_name )
     scoreText = this.add.text( DEV_X + 15, DEV_Y+ 160, "Level: 1", { fontSize: '20px', fill: '#FFFFFF' });
     levelText = this.add.text( DEV_X + 15, DEV_Y+ 130, "Score: 1", { fontSize: '20px', fill: '#FFFFFF' });
 
   }
 
   drawDeveloperMap( ){
-
-      //this.add.image( DEV_X, DEV_Y, 'background' ).setOrigin(0,0)
+    
       devArrayText = this.add.text( DEV_X + 150, DEV_Y+ 15, map.getMap(), { fontSize: '15px', fill: '#FFFFFF' });
 
   }
