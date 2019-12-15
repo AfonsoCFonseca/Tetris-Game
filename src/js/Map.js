@@ -92,7 +92,7 @@ class Map {
 			}
 
 		}
-
+ 
 		return false
 	}
 
