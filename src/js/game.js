@@ -97,7 +97,7 @@ class GameScene extends Phaser.Scene {
     if( nextPieceImage != null ) nextPieceImage.remove()
     nextPieceImage = this.add.image( DEV_X + 10, DEV_Y + 10 , next_piece_name ).setOrigin(0,0)
   }
-  
+
 
   drawGui(){
 
@@ -109,7 +109,7 @@ class GameScene extends Phaser.Scene {
   }
 
   drawDeveloperMap( ){
-    
+
       devArrayText = this.add.text( DEV_X + 150, DEV_Y+ 15, map.getMap(), { fontSize: '15px', fill: '#FFFFFF' });
 
   }

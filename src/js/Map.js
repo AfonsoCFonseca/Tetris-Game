@@ -61,7 +61,7 @@ class Map {
 		for( var i = 0; i < this.yArrayLength; i++ ) {
 
 			for( var j = 0; j < this.xArrayLength; j++ ){
-				if( this.tetrisMap[i][j] == "3" ) continue
+				if( this.tetrisMap[i][j] == 3 ) continue
 
 				this.tetrisMap[i][j] = 0
 			}
@@ -77,6 +77,18 @@ class Map {
 					return true
 			}
 		}
+
+		if( side == "right" ){
+			for( var i = 0; i < 4; i++ ){
+				console.log( ps.xArr + 3  )
+
+				if( this.getMapPosition( ps.yArr + i ,ps.xArr + 2 ) == 2 &&
+					this.getMapPosition( ps.yArr + i ,ps.xArr + 2 ) == 3 )
+					return true
+
+			}
+		}
+
 		return false
 
 	}
@@ -86,13 +98,13 @@ class Map {
 		// Contact piece with piece
 		for( var j = 0; j < 4; j++ ){
 
-			if( this.getLastYpiece( j ) == "2" ) {
+			if( this.getLastYpiece( j ) == 2 ) {
 				 if( this.isTouchingFloor() || this.isTouchingDownPiece( j ) )
 					return true
 			}
 
 		}
- 
+
 		return false
 	}
 
@@ -101,7 +113,7 @@ class Map {
 	}
 
 	isTouchingDownPiece( x ){
-		return this.getMapPosition( ps.yArr + 4, ps.xArr + x  ) == "3"
+		return this.getMapPosition( ps.yArr + 4, ps.xArr + x  ) == 3
 	}
 
 	isTouchingFloor(){
@@ -133,8 +145,8 @@ class Map {
 
 		for( var i = 0; i < this.yArrayLength; i++ ) {
 			for( var j = 0; j < this.xArrayLength; j++ ){
-				if( this.tetrisMap[i][j] == "2" )
-					this.tetrisMap[i][j] = "3"
+				if( this.tetrisMap[i][j] == 2 )
+					this.tetrisMap[i][j] = 3
 			}
 		}
 
@@ -153,12 +165,12 @@ class Map {
 		for( var i = 0; i < this.xArrayLength; i++ ){
 			for( var j = 0; j < this.yArrayLength; j++ ) {
 
-	        	if( this.tetrisMap[j][i] == "2" ){
+	        	if( this.tetrisMap[j][i] == 2 ){
 					var { x , y } = convertFromMapToWidth( i, j )
 	        		var square = this.scene.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, ps.pieceColorHash ).setOrigin(0,0)
 					this.scene.imageGroup.add(square);
 	        	}
-				if( this.tetrisMap[j][i] == "3" ){
+				if( this.tetrisMap[j][i] == 3 ){
 					var { x , y } = convertFromMapToWidth( i, j )
 	        		var square = this.scene.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, 0x000000 ).setOrigin(0,0)
 					this.scene.imageGroup.add(square);
@@ -178,9 +190,19 @@ class Map {
 		for( var i = 0; i < this.yArrayLength; i++ ) {
 
 			olderState = this.tetrisMap[i]
+
+			for( var j = 0; j < this.xArrayLength; j++ ) {
+
+				if( this.tetrisMap[i][j] == 3 )
+					newState[j] = 3
+				if( olderState[j] == 3 )
+					olderState[j] = 0
+
+			}
+
 			this.tetrisMap[i] = newState
 			newState = olderState
-			
+
 		}
 
 	}
