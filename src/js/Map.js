@@ -86,18 +86,21 @@ class Map {
 
 		var { xArr, yArr } = convertFromWidthToMap( ps.x, ps.y )
 
+		// Contact piece with ground
+		// for( var i = 0; i < this.xArrayLength; i++ ){
+		// 	if( this.tetrisMap[ this.yArrayLength - 1 ][i] == 2 )
+		// 		return true
+		// }
+
 		// Contact piece with piece
 		for( var j = 0; j < 4; j++ ){
-			if( this.getMapPosition( xArr + j ,yArr + 4 ) == "2"
-				&& this.getMapPosition( xArr + j ,yArr + 5 ) == "2"  )
-				return true
+
+				if( this.getMapPosition( yArr + 4, xArr + j ) == "2"
+					&& this.getMapPosition( yArr + 5, xArr + j  ) == "3"  )
+					return true
+
 		}
 
-		// Contact piece with ground
-		for( var i = 0; i < this.xArrayLength; i++ ){
-			if( this.tetrisMap[ this.yArrayLength - 1 ][i] == 2 )
-				return true
-		}
 		return false
 	}
 
