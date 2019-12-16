@@ -80,8 +80,6 @@ class Map {
 
 		if( side == "right" ){
 			for( var i = 0; i < 4; i++ ){
-				console.log( ps.xArr + 3  )
-
 				if( this.getMapPosition( ps.yArr + i ,ps.xArr + 2 ) == 2 &&
 					this.getMapPosition( ps.yArr + i ,ps.xArr + 2 ) == 3 )
 					return true
@@ -96,11 +94,15 @@ class Map {
 	isDownLimit(){
 
 		// Contact piece with piece
-		for( var j = 0; j < 4; j++ ){
+		for( var i = 0; i < 4; i++ ){
 
-			if( this.getLastYpiece( j ) == 2 ) {
-				 if( this.isTouchingFloor() || this.isTouchingDownPiece( j ) )
-					return true
+			for( var j = 0; j < 4; j++ ){
+
+				if( this.getLastYpiece( j, i ) == 2 ) {
+					if( this.isTouchingFloor() || this.isTouchingDownPiece( j, i ) )
+						return true
+				}
+
 			}
 
 		}
@@ -108,12 +110,12 @@ class Map {
 		return false
 	}
 
-	getLastYpiece( x ){
-		return this.getMapPosition( ps.yArr + 3, ps.xArr + x )
+	getLastYpiece( y, x ){
+		return this.getMapPosition( ps.yArr + y, ps.xArr + x )
 	}
 
-	isTouchingDownPiece( x ){
-		return this.getMapPosition( ps.yArr + 4, ps.xArr + x  ) == 3
+	isTouchingDownPiece( y, x ){
+		return this.getMapPosition( ps.yArr + y+1, ps.xArr + x  ) == 3
 	}
 
 	isTouchingFloor(){
@@ -186,6 +188,7 @@ class Map {
 
 		var olderState = null
 		var newState = [ 0,0,0,0,0,0,0,0,0,0 ]
+
 
 		for( var i = 0; i < this.yArrayLength; i++ ) {
 

@@ -1,13 +1,14 @@
 var keyD
 var keyA
 var keyW
+var keyS
 
 var devArrayText
 var scoreText
 var levelText
 var nextPieceImage
 
-var frameInterval = 100
+var frameInterval = 300
 var map = null
 var ps = null
 
@@ -40,9 +41,10 @@ class GameScene extends Phaser.Scene {
     ps = new PieceSet( this )
     map.mapDrawer( )
 
-    keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    keyD = this.input.keyboard.addKey("D");
+    keyA = this.input.keyboard.addKey("A");
+    keyW = this.input.keyboard.addKey("W");
+    keyS = this.input.keyboard.addKey("S");
 
     this.drawGui()
     this.drawDeveloperMap( )
@@ -53,17 +55,18 @@ class GameScene extends Phaser.Scene {
 
   update(){
 
-    if (Phaser.Input.Keyboard.JustDown(keyW))
-    {
-      ps.turn('right')
+    if (Phaser.Input.Keyboard.JustDown(keyA)){
+      ps.move('left')
     }
-    if (Phaser.Input.Keyboard.JustDown(keyD))
-    {
+    if (Phaser.Input.Keyboard.JustDown(keyD)){
       ps.move('right')
     }
-    if (Phaser.Input.Keyboard.JustDown(keyA))
-    {
-      ps.move('left')
+
+    if (Phaser.Input.Keyboard.JustDown(keyW)){
+      ps.turn('right')
+    }
+    if (Phaser.Input.Keyboard.JustUp(keyS)){
+      ps.move('down')
     }
 
   }
@@ -85,11 +88,12 @@ class GameScene extends Phaser.Scene {
     if( map.isDownLimit() == true ){
       map.tearDownPiece()
       ps.createAnotherPiece()
-      return
+      return true
     }
 
     ps.downCicle()
     map.downCicle()
+    return false
 
   }
 
@@ -110,7 +114,7 @@ class GameScene extends Phaser.Scene {
 
   drawDeveloperMap( ){
 
-      devArrayText = this.add.text( DEV_X + 150, DEV_Y+ 15, map.getMap(), { fontSize: '15px', fill: '#FFFFFF' });
+      devArrayText = this.add.text( DEV_X + 150, DEV_Y+ 15, map.getMap(), { fontSize: '25px', fill: '#FFFFFF' });
 
   }
 }

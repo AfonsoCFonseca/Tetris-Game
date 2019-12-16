@@ -90,6 +90,12 @@ class PieceSet {
         this.setPosition( this.x + 50 ,this.y )
         map.movementPieceSet( this.x, this.y, this.piece )
       }
+      else if( side == "down" ){
+        var hitObject = false
+        do {
+            hitObject = this.scene.downCicle()
+        } while( !hitObject )
+      }
 
     }
 

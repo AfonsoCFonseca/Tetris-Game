@@ -12,5 +12,5 @@
 	}
 
 	function convertValuesForSetPiece( piece ){
-		return piece == 1 ? 2: 1
+		return piece == 1 ? 2: 0
 	}
