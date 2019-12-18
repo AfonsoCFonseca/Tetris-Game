@@ -1,8 +1,8 @@
-### Tetris_game ###
+## Tetris_game
  
 Traditional Tetris game, running on Phaser 3, made just for keeping my mind exercised
 
-## Structure
+### Structure ###
 
 10 x 20 Bi-dimensional Array
 
@@ -12,12 +12,13 @@ Piece values on an array
  3 - Landed Piece Space
 
 PieceSet
-[ 0, 0, 0, 0 ]   [ 0, 0, 0, 0 ]    [ 0, 0, 0, 0 ]  
-[ 0, 0, 0, 0 ]   [ 1, 0, 0, 0 ]    [ 0, 0, 0, 1 ]  
-[ 0, 1, 0, 0 ]   [ 1, 1, 0, 0 ]    [ 0, 0, 0, 1 ]  
-[ 1, 1, 1, 0 ]   [ 1, 0, 0, 0 ]    [ 0, 0, 1, 1 ]  
 
-## Logic
+[ 0, 0, 0, 0 ]   
+[ 0, 0, 0, 0 ]   
+[ 0, 1, 0, 0 ]   
+[ 1, 1, 1, 0 ]   
+
+### Logic ###
 
 I've created the piece set to be represented 4x4 2D Array
 With that in mind, I've created a class named toolbox, where I've stored all the pieces and the related rotation combinations, this toolbox return a random piece to be declared to the PieceSet Class
