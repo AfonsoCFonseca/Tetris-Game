@@ -4,10 +4,8 @@ class Map {
 
 		this.yArrayLength = 20
 		this.xArrayLength = 10
-		this.pieceSet = null;
 		this.tetrisMap = []
 		this.createMap()
-		this.groupOfSquares = []
 		this.scene = scene
 
 	}
@@ -67,6 +65,79 @@ class Map {
 			}
 		}
 
+	}
+
+	isTurnLimit( side, possiblePiece ){
+		var { xArr, yArr } = convertFromWidthToMap( ps.x, ps.y )
+
+
+		for( var i = 0; i < 4; i++ ){
+			for( var j = 0; j < 4; j++ ){
+
+				if( possiblePiece[i][j] == 1 ){
+					var value = this.getMapPosition( i + yArr, j + xArr )
+
+					//limit touching other pieces
+					if( value == 3 ) return true
+
+					if( j + xArr > 9 ){
+						return this.drawSetPieceOnSideLimit( "rightLimit", possiblePiece )
+					}
+					else if( j + xArr < 0 ){
+						return this.drawSetPieceOnSideLimit( "leftLimit", possiblePiece )
+					}
+
+				}
+
+			}
+		}
+
+
+		return false
+	}
+
+	drawSetPieceOnSideLimit( sideLimit, possiblePiece ){
+
+		this.clearMap()
+		var { xArr, yArr } = convertFromWidthToMap( ps.x, ps.y )
+		var x
+		if( sideLimit == "leftLimit" ){
+
+			for( var i = 0; i < 4; i++ ){
+				for( var j = 0; j < 4; j++ ){
+					if( possiblePiece[i][j] == 1 ){
+						x = j
+						break;
+					}
+				}
+			}
+
+			for( var i2 = 0; i2 < 4; i2++ ){
+				for( var j2 = 0; j2 < 4; j2++ ){
+					if( possiblePiece[i2][j2] == 1 ){
+						var valueMap = convertValuesForSetPiece( possiblePiece[i2][j2] )
+
+						if( valueMap == 2 ){
+							this.setMapPosition( yArr + i2, x + j2, valueMap )
+						}
+
+					}
+				}
+			}
+console.log( "x", x )
+console.log( "y", yArr )
+			var { x,y } = convertFromMapToWidth( x, yArr )
+console.log( "x", x )
+console.log( "y", y )
+			return {
+				x: x,
+				y: y
+			}
+
+		}
+
+		this.mapDrawer()
+		//MUDAR O X e Y do SET PIECE
 	}
 
 	isSideLimit( side ){
@@ -132,7 +203,8 @@ class Map {
 			for( var j = ps.yArr; j < ps.yArr + 4 ; j++ ){
 
 					var valueMap = convertValuesForSetPiece( pieceMap[contadorY][contadorX] )
-					this.setMapPosition( j, i, valueMap )
+					if( valueMap == 2 ) this.setMapPosition( j, i, valueMap )
+
 					contadorY++
 
 			}
@@ -167,14 +239,14 @@ class Map {
 		for( var i = 0; i < this.xArrayLength; i++ ){
 			for( var j = 0; j < this.yArrayLength; j++ ) {
 
-	        	if( this.tetrisMap[j][i] == 2 ){
+	      if( this.tetrisMap[j][i] == 2 ){
 					var { x , y } = convertFromMapToWidth( i, j )
-	        		var square = this.scene.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, ps.pieceColorHash ).setOrigin(0,0)
+	       	var square = this.scene.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, ps.pieceColorHash ).setOrigin(0,0)
 					this.scene.imageGroup.add(square);
-	        	}
+	      }
 				if( this.tetrisMap[j][i] == 3 ){
 					var { x , y } = convertFromMapToWidth( i, j )
-	        		var square = this.scene.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, 0x000000 ).setOrigin(0,0)
+	        var square = this.scene.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, 0x000000 ).setOrigin(0,0)
 					this.scene.imageGroup.add(square);
 	        	}
 

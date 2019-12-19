@@ -48,24 +48,9 @@ class PieceSet {
         }
     }
 
-    turn( side ){
-
-      if( side == "left" ){
-        this.pieceOriention = turnOriention( "left", this.pieceOriention )
-        this.piece = toolbox( this.pieceColor, this.pieceOriention )
-        map.movementPieceSet( this.x, this.y, this.piece )
-      }
-      else if( side == "right" ){
-        this.pieceOriention = turnOriention( "right", this.pieceOriention )
-        this.piece = toolbox( this.pieceColor, this.pieceOriention )
-        map.movementPieceSet( this.x, this.y, this.piece )
-      }
-
-    }
-
     createAnotherPiece(){
 
-        this.pieceColor = this.next_piece_name 
+        this.pieceColor = this.next_piece_name
         this.piece = toolbox( this.next_piece_name, "NORTH" )
         this.pieceColorHash = this.getColor()
         this.next_piece_name = this.allPieces[ Phaser.Math.Between( 0, 6 ) ]
@@ -77,6 +62,24 @@ class PieceSet {
         var { x, y } = map.getNewSetPiecePosition( this.piece )
 
         this.setPosition( x, y )
+
+    }
+
+    turn( side ){
+
+      var possibleOrientation = turnOriention( side, this.pieceOriention )
+      var possiblePiece = toolbox( this.pieceColor, possibleOrientation )
+      var result = map.isTurnLimit( side, possiblePiece )
+      if( result == "limited" ){
+        return
+      }
+      else if( typeof result == "object" ){
+        this.setPosition( result.x, result.y)
+      }
+
+      this.pieceOriention = possibleOrientation
+      this.piece = possiblePiece
+      map.movementPieceSet( this.x, this.y, this.piece )
 
     }
 
