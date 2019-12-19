@@ -14,6 +14,7 @@ const COLOR_PIECE_E = 0xF00000
 const COLOR_PIECE_F = 0xF0A000
 const COLOR_PIECE_G = 0xF0F000
 
+var actualRandomPieces = []
 
 function toolbox( piece, position = "NORTH" ){
 
@@ -138,17 +139,17 @@ function pieceDrot( state ){
 			return [
 				[0,0,0,0],
 				[0,0,0,0],
-				[0,1,1,0],
-				[0,0,1,1]
+				[1,1,0,0],
+				[0,1,1,0]
 			]
 		case "WEST":
 		case "EAST":
 		default:
 			return [
 				[0,0,0,0],
-				[0,0,0,1],
-				[0,0,1,1],
-				[0,0,1,0]
+				[0,0,1,0],
+				[0,1,1,0],
+				[0,1,0,0]
 			]
 	}
 }

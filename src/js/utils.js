@@ -14,3 +14,11 @@
 	function convertValuesForSetPiece( piece ){
 		return piece == 1 ? 2: 0
 	}
+
+	function checkYLine( arr, x, value ){
+		--x
+		if( arr[0][x] == value && arr[1][x] == value && 
+			arr[2][x] == value && arr[3][x] == value)
+			return true
+		else return false
+	}

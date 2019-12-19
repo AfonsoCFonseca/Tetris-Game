@@ -6,7 +6,7 @@ class PieceSet {
         this.pieceColor;
         this.piece = this.chooseRandomPiece()
         this.pieceColorHash = this.getColor()
-        this.next_piece_name = this.allPieces[ Phaser.Math.Between( 0, 6 ) ]
+        this.next_piece_name = this.takePieceFromRandomBox()
         this.pieceOriention = "NORTH"
         this.scene = scene
 
@@ -53,7 +53,7 @@ class PieceSet {
         this.pieceColor = this.next_piece_name
         this.piece = toolbox( this.next_piece_name, "NORTH" )
         this.pieceColorHash = this.getColor()
-        this.next_piece_name = this.allPieces[ Phaser.Math.Between( 0, 6 ) ]
+        this.next_piece_name = this.takePieceFromRandomBox()
         this.pieceOriention = "NORTH"
 
         if( nextPieceImage != null ) nextPieceImage.destroy()
@@ -109,9 +109,24 @@ class PieceSet {
     }
 
     chooseRandomPiece(){
-      this.pieceColor = this.allPieces[ Phaser.Math.Between( 0, 6 ) ]
+      this.pieceColor = this.takePieceFromRandomBox()
       this.piece = toolbox( this.pieceColor, this.pieceOriention )
       return this.piece
+    }
+
+    takePieceFromRandomBox(){
+      if( actualRandomPieces.length <= 0 ) 
+          actualRandomPieces = [
+           "blue","dark_blue","green","purple", "red","orange","yellow",
+           "blue","dark_blue","green","purple", "red","orange","yellow" 
+          ]
+      do {
+        var index = Phaser.Math.Between( 0, actualRandomPieces.length - 1 )
+        var piece = actualRandomPieces[index]
+      } while( piece == this.pieceColor )
+
+      actualRandomPieces.splice( index, 1 )
+      return piece
     }
 
 }

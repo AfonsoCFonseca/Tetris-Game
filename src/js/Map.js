@@ -67,9 +67,9 @@ class Map {
 
 	}
 
+////// SPECIAL TURN PIECES LIMIT
 	isTurnLimit( side, possiblePiece ){
 		var { xArr, yArr } = convertFromWidthToMap( ps.x, ps.y )
-
 
 		for( var i = 0; i < 4; i++ ){
 			for( var j = 0; j < 4; j++ ){
@@ -79,66 +79,45 @@ class Map {
 
 					//limit touching other pieces
 					if( value == 3 ) return true
-
-					if( j + xArr > 9 ){
-						return this.drawSetPieceOnSideLimit( "rightLimit", possiblePiece )
-					}
-					else if( j + xArr < 0 ){
-						return this.drawSetPieceOnSideLimit( "leftLimit", possiblePiece )
-					}
-
+					//Special Pieces rotation
+					if( j + xArr > 9 )
+						return this.drawSetPieceTurningOnSideLimit( "rightLimit", possiblePiece )
+					else if( j + xArr < 0 )
+						return this.drawSetPieceTurningOnSideLimit( "leftLimit", possiblePiece )
+					
 				}
 
 			}
 		}
-
 
 		return false
 	}
 
-	drawSetPieceOnSideLimit( sideLimit, possiblePiece ){
+	drawSetPieceTurningOnSideLimit( sideLimit, possiblePiece ){
 
 		this.clearMap()
 		var { xArr, yArr } = convertFromWidthToMap( ps.x, ps.y )
-		var x
-		if( sideLimit == "leftLimit" ){
 
-			for( var i = 0; i < 4; i++ ){
-				for( var j = 0; j < 4; j++ ){
-					if( possiblePiece[i][j] == 1 ){
-						x = j
-						break;
-					}
+		for( var i2 = 0; i2 < 4; i2++ ){
+			for( var j2 = 0; j2 < 4; j2++ ){
+				if( possiblePiece[i2][j2] == 1 ){
+					if( sideLimit == "rightLimit" )
+						this.setMapPosition( yArr + i2, this.xArrayLength - j2 , 2 )
+					else 
+						this.setMapPosition( yArr + i2, j2, 2 )
 				}
 			}
-
-			for( var i2 = 0; i2 < 4; i2++ ){
-				for( var j2 = 0; j2 < 4; j2++ ){
-					if( possiblePiece[i2][j2] == 1 ){
-						var valueMap = convertValuesForSetPiece( possiblePiece[i2][j2] )
-
-						if( valueMap == 2 ){
-							this.setMapPosition( yArr + i2, x + j2, valueMap )
-						}
-
-					}
-				}
-			}
-console.log( "x", x )
-console.log( "y", yArr )
-			var { x,y } = convertFromMapToWidth( x, yArr )
-console.log( "x", x )
-console.log( "y", y )
-			return {
-				x: x,
-				y: y
-			}
-
 		}
 
-		this.mapDrawer()
-		//MUDAR O X e Y do SET PIECE
+		if( sideLimit == "rightLimit" ){
+			var contador = checkYLine( possiblePiece, 4, 0 ) ? 1 : 0
+			return convertFromMapToWidth( this.xArrayLength - (j2 - contador ), yArr )
+		}
+		else return convertFromMapToWidth( 0, yArr )
+
 	}
+
+////// GENERAL SIDE LIMIT
 
 	isSideLimit( side ){
 
@@ -161,6 +140,8 @@ console.log( "y", y )
 		return false
 
 	}
+
+////// GENERAL DOWN LIMIT
 
 	isDownLimit(){
 
@@ -192,6 +173,8 @@ console.log( "y", y )
 	isTouchingFloor(){
 		return ps.yArr + 4 == 20
 	}
+
+////// MOVE AND TURN
 
 	movementPieceSet( x, y, pieceMap ){
 		this.clearMap()
@@ -239,16 +222,16 @@ console.log( "y", y )
 		for( var i = 0; i < this.xArrayLength; i++ ){
 			for( var j = 0; j < this.yArrayLength; j++ ) {
 
-	      if( this.tetrisMap[j][i] == 2 ){
+				if( this.tetrisMap[j][i] == 2 ){
 					var { x , y } = convertFromMapToWidth( i, j )
-	       	var square = this.scene.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, ps.pieceColorHash ).setOrigin(0,0)
+					var square = this.scene.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, ps.pieceColorHash ).setOrigin(0,0)
 					this.scene.imageGroup.add(square);
-	      }
+				}
 				if( this.tetrisMap[j][i] == 3 ){
 					var { x , y } = convertFromMapToWidth( i, j )
-	        var square = this.scene.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, 0x000000 ).setOrigin(0,0)
+					var square = this.scene.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, 0x000000 ).setOrigin(0,0)
 					this.scene.imageGroup.add(square);
-	        	}
+				}
 
 	        }
 	    }
@@ -280,6 +263,29 @@ console.log( "y", y )
 
 		}
 
+	}
+
+///////// COMBO /////////
+	comboVerify(){
+
+		loop1:
+	    for( var i = 0; i < this.yArrayLength; i++ ) {
+
+	    	loop2:
+	        for( var j = 0; j < this.xArrayLength; j++ ){
+	        	if( this.tetrisMap[i][j] != 3 )
+	        		break loop2;
+	        	if( j ==  this.xArrayLength - 1 ) 
+	        		this.breakComboLine()
+	        }
+
+	    }
+
+	    return false
+	}
+
+	breakComboLine(){
+		console.log("COMBO")
 	}
 
 }

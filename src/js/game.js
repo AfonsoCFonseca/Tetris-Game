@@ -76,9 +76,10 @@ class GameScene extends Phaser.Scene {
 
       setInterval( () => {
 
-          this.downCicle( )
-          devArrayText.setText( map.getMap() )
-          map.mapDrawer( this )
+        this.downCicle( )
+        map.comboVerify()
+        devArrayText.setText( map.getMap() )
+        map.mapDrawer( this )
 
       }, frameInterval )
   }
