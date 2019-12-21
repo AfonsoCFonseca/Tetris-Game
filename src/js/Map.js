@@ -2,7 +2,7 @@ class Map {
 
 	constructor( scene ){
 
-		this.yArrayLength = 20
+		this.yArrayLength = 24
 		this.xArrayLength = 10
 		this.tetrisMap = []
 		this.createMap()
@@ -118,22 +118,21 @@ class Map {
 	}
 
 ////// GENERAL SIDE LIMIT
-
 	isSideLimit( side ){
-
+		//Wall Collide
 		for( var i = 0; i < this.yArrayLength; i++ ) {
 			for( var j = 0; j < this.xArrayLength; j++ ){
 				if( this.tetrisMap[i][ side == 'right' ? this.xArrayLength - 1 : 0 ] == 2 )
 					return true
 			}
 		}
-
-		if( side == "right" ){
-			for( var i = 0; i < 4; i++ ){
-				if( this.getMapPosition( ps.yArr + i ,ps.xArr + 2 ) == 2 &&
-					this.getMapPosition( ps.yArr + i ,ps.xArr + 2 ) == 3 )
+		//Piece collide
+		for( var i = 0; i < 4; i++ ){
+			for( var j = 0; j < 4; j++ ){
+				if( this.getMapPosition( ps.yArr + i , ps.xArr + j + ( side == "right" ? 1 : -1) ) == 2 &&
+					this.getMapPosition( ps.yArr + i , ps.xArr + j + ( side == "right" ? 2 : -2) ) == 3 ){
 					return true
-
+				}
 			}
 		}
 
@@ -171,7 +170,7 @@ class Map {
 	}
 
 	isTouchingFloor(){
-		return ps.yArr + 4 == 20
+		return ps.yArr + 4 == this.yArrayLength
 	}
 
 ////// MOVE AND TURN
@@ -268,15 +267,15 @@ class Map {
 ///////// COMBO /////////
 	comboVerify(){
 
-		loop1:
 	    for( var i = 0; i < this.yArrayLength; i++ ) {
 
-	    	loop2:
 	        for( var j = 0; j < this.xArrayLength; j++ ){
 	        	if( this.tetrisMap[i][j] != 3 )
-	        		break loop2;
-	        	if( j ==  this.xArrayLength - 1 ) 
-	        		this.breakComboLine()
+	        		break ;
+	        	if( j ==  this.xArrayLength - 1 ){
+	        		this.breakComboLine( i )
+	        		this.scene.incrSpeed()
+	        	} 
 	        }
 
 	    }
@@ -284,8 +283,19 @@ class Map {
 	    return false
 	}
 
-	breakComboLine(){
-		console.log("COMBO")
+	breakComboLine( y ){
+
+		 for( var i = this.yArrayLength - 1; i >= 0; i-- ) {
+	        for( var j = 0; j < this.xArrayLength; j++ ){
+
+	        	if( i <= y && this.tetrisMap[i][j] == 3 ){
+	        		var posY = i - 1
+	        		this.tetrisMap[i][j] = this.tetrisMap[posY][j]
+	        	}
+
+	        }
+	    }
+
 	}
 
 }

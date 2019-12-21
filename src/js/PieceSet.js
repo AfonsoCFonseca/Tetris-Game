@@ -57,7 +57,7 @@ class PieceSet {
         this.pieceOriention = "NORTH"
 
         if( nextPieceImage != null ) nextPieceImage.destroy()
-        nextPieceImage = this.scene.add.image( DEV_X + 10, DEV_Y + 10 , this.next_piece_name ).setOrigin(0,0)
+        nextPieceImage = this.scene.add.image( DEV_X + 10, DEV_Y + 250 , this.next_piece_name ).setOrigin(0,0)
 
         var { x, y } = map.getNewSetPiecePosition( this.piece )
 
@@ -120,10 +120,10 @@ class PieceSet {
            "blue","dark_blue","green","purple", "red","orange","yellow",
            "blue","dark_blue","green","purple", "red","orange","yellow" 
           ]
-      do {
+
         var index = Phaser.Math.Between( 0, actualRandomPieces.length - 1 )
         var piece = actualRandomPieces[index]
-      } while( piece == this.pieceColor )
+    
 
       actualRandomPieces.splice( index, 1 )
       return piece

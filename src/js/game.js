@@ -11,6 +11,10 @@ var nextPieceImage
 var frameInterval = 300
 var map = null
 var ps = null
+var combos = 0 
+var score = 0
+var level = 0
+var gameOver = false
 
 class GameScene extends Phaser.Scene {
   constructor(){
@@ -22,6 +26,8 @@ class GameScene extends Phaser.Scene {
 
     this.imageGroup = this.add.group();
     this.load.image( 'background', 'assets/whiteBackground.png' )
+    var rect = this.add.rectangle( MAP_MARGIN, MAP_MARGIN, 500, 250, 0x000000 ).setOrigin(0,0)
+    rect.setDepth( 10 )
 
     this.load.image( 'orange', 'assets/orange.png' )
     this.load.image( 'red', 'assets/red.png' )
@@ -55,18 +61,20 @@ class GameScene extends Phaser.Scene {
 
   update(){
 
-    if (Phaser.Input.Keyboard.JustDown(keyA)){
-      ps.move('left')
-    }
-    if (Phaser.Input.Keyboard.JustDown(keyD)){
-      ps.move('right')
-    }
+    if( !gameOver ){
+      if (Phaser.Input.Keyboard.JustDown(keyA)){
+        ps.move('left')
+      }
+      if (Phaser.Input.Keyboard.JustDown(keyD)){
+        ps.move('right')
+      }
 
-    if (Phaser.Input.Keyboard.JustDown(keyW)){
-      ps.turn('right')
-    }
-    if (Phaser.Input.Keyboard.JustUp(keyS)){
-      ps.move('down')
+      if (Phaser.Input.Keyboard.JustDown(keyW)){
+        ps.turn('right')
+      }
+      if (Phaser.Input.Keyboard.JustUp(keyS)){
+        ps.move('down')
+      }
     }
 
   }
@@ -76,12 +84,38 @@ class GameScene extends Phaser.Scene {
 
       setInterval( () => {
 
+        if( this.isGameOver() ){
+          return;
+        }
+
         this.downCicle( )
         map.comboVerify()
         devArrayText.setText( map.getMap() )
         map.mapDrawer( this )
 
       }, frameInterval )
+  }
+
+  isGameOver(){
+    for( var i = 0; i < map.xArrayLength; i++ ){
+      var value =  map.getMapPosition( 4, i )
+      if( value == 3 ){
+        gameOver = true
+        this.drawGameOverScreen()
+        return true
+      }
+    }
+    return false
+  }
+
+  drawGameOverScreen(){
+        const gameOverLetters = this.add.text(500 / 2 , 500, 'Game Over', { fill: '#0f0' });
+        gameOverLetters.setInteractive();
+        gameOverLetters.on('pointerover', () => { this.restart() });
+  }
+
+  restart(){
+    console.log( "restarting" )
   }
 
   downCicle( ){
@@ -100,24 +134,37 @@ class GameScene extends Phaser.Scene {
 
   addNextPieceImage( next_piece_name ){
     if( nextPieceImage != null ) nextPieceImage.remove()
-    nextPieceImage = this.add.image( DEV_X + 10, DEV_Y + 10 , next_piece_name ).setOrigin(0,0)
+    nextPieceImage = this.add.image( DEV_X + 10, DEV_Y + 250 , next_piece_name ).setOrigin(0,0)
   }
 
 
   drawGui(){
 
-    this.add.rectangle( DEV_X + 10, DEV_Y + 10, 110, 100, 0xFFFFFF ).setOrigin(0,0)
+    this.add.rectangle( DEV_X + 10, DEV_Y + 250, 110, 100, 0xFFFFFF ).setOrigin(0,0)
     this.addNextPieceImage( ps.next_piece_name )
-    scoreText = this.add.text( DEV_X + 15, DEV_Y+ 160, "Level: 1", { fontSize: '20px', fill: '#FFFFFF' });
-    levelText = this.add.text( DEV_X + 15, DEV_Y+ 130, "Score: 1", { fontSize: '20px', fill: '#FFFFFF' });
+    levelText = this.add.text( DEV_X + 15, DEV_Y+ 410, "Level: "+level, { fontSize: '20px', fill: '#FFFFFF' });
+    scoreText = this.add.text( DEV_X + 15, DEV_Y+ 380, "Score: "+score, { fontSize: '20px', fill: '#FFFFFF' });
 
   }
 
   drawDeveloperMap( ){
 
-      devArrayText = this.add.text( DEV_X + 150, DEV_Y+ 15, map.getMap(), { fontSize: '25px', fill: '#FFFFFF' });
+      devArrayText = this.add.text( DEV_X + 150, DEV_Y+ 250, map.getMap(), { fontSize: '25px', fill: '#FFFFFF' });
 
   }
+
+  incrSpeed(){
+    combos++
+    if( combos % 2 == 0 ){
+      level
+      frameInterval -= 30
+    }
+    score += 100
+
+    levelText.setText( "Level: "+level )
+    scoreText.setText( "Score: "+score )
+  }
+
 }
 
 var config = {
