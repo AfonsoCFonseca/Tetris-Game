@@ -35,4 +35,4 @@ I started the project using the class Rectangles from Phaser to draw the map pie
 I draw a single tile in photoshop and applied a layer with 20% opacity for each color I used
 ( blue, dark blue, green, yellow, orange, red, purple and gray )
 
-<img src='https://github.com/afonsofcfonseca/ExGameCompanyInYears/blob/master/screenshots/firstMap.png'>
+<img src='https://github.com/AfonsoCFonseca/ExGameCompanyInYears/blob/master/screenshots/firstMap.png'>
