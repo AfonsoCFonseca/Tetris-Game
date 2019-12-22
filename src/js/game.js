@@ -25,7 +25,7 @@ class GameScene extends Phaser.Scene {
   preload(){
 
     this.imageGroup = this.add.group();
-    this.load.image( 'background', 'assets/whiteBackground.png' )
+    this.load.image( 'background', 'assets/whiteBackground2.png' )
     var rect = this.add.rectangle( MAP_MARGIN, MAP_MARGIN, 500, 250, 0x000000 ).setOrigin(0,0)
     rect.setDepth( 10 )
 
@@ -37,6 +37,14 @@ class GameScene extends Phaser.Scene {
     this.load.image( 'yellow', 'assets/yellow.png' )
     this.load.image( 'green', 'assets/green.png' )
 
+    this.load.image( 'orangeTile', 'assets/orangeTile.jpg' )
+    this.load.image( 'redTile', 'assets/redTile.jpg' )
+    this.load.image( 'purpleTile', 'assets/purpleTile.jpg' )
+    this.load.image( 'blueTile', 'assets/blueTile.jpg' )
+    this.load.image( 'darkBlueTile', 'assets/darkBlueTile.jpg' )
+    this.load.image( 'yellowTile', 'assets/yellowTile.jpg' )
+    this.load.image( 'greenTile', 'assets/greenTile.jpg' )
+    this.load.image( 'grayTile', 'assets/grayTile.jpg' )
 
   }
 

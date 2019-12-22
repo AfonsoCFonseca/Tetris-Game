@@ -223,12 +223,13 @@ class Map {
 
 				if( this.tetrisMap[j][i] == 2 ){
 					var { x , y } = convertFromMapToWidth( i, j )
-					var square = this.scene.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, ps.pieceColorHash ).setOrigin(0,0)
+					var square = this.scene.add.image( x, y, ps.pieceColorHash ).setOrigin(0,0)
 					this.scene.imageGroup.add(square);
 				}
 				if( this.tetrisMap[j][i] == 3 ){
 					var { x , y } = convertFromMapToWidth( i, j )
-					var square = this.scene.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, 0x000000 ).setOrigin(0,0)
+					//var square = this.scene.add.rectangle( x, y, PIECE_SIZE, PIECE_SIZE, 0x000000 ).setOrigin(0,0)
+					var square = this.scene.add.image( x, y, "grayTile" ).setOrigin(0,0)
 					this.scene.imageGroup.add(square);
 				}
 

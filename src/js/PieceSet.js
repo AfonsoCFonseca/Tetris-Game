@@ -31,19 +31,19 @@ class PieceSet {
     getColor(){
         switch( this.pieceColor ){
             case "blue":
-                return COLOR_PIECE_A
+                return "blueTile"
             case "dark_blue":
-                return COLOR_PIECE_B
+                return "darkBlueTile"
             case "green":
-                return COLOR_PIECE_C
+                return "greenTile"
             case "purple":
-                return COLOR_PIECE_D
+                return "purpleTile"
             case "red":
-                return COLOR_PIECE_E
+                return "redTile"
             case "orange":
-                return COLOR_PIECE_F
+                return "orangeTile"
             case "yellow":
-                return COLOR_PIECE_G
+                return "yellowTile"
 
         }
     }

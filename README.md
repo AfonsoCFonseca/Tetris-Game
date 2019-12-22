@@ -27,10 +27,3 @@ The Game ticks every X time, where X, starts with 500ms and decrements every two
 The tick means that every first dimension of the array ( X-axis ) moves one position forward, so it can simulate the movement
 
 Combo Line - Every time, one position of the first dimension of the array assume the value of 3
-
-### Evolution & Design ###
-
-I started the project with using the class Rectangles from Phaser to draw the map pieces
-
-I draw a single tile in photoshop and applied a layer with 20% opacity for each color I used
-( blue, dark blue, green, yellow, orange, red, purple and gray )
