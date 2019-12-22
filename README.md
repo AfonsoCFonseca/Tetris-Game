@@ -37,6 +37,6 @@ I draw a single tile in photoshop and applied a layer with 20% opacity for each 
 
 <p float="left">
   <img src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/firstMap.png'>
-  <img src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/mapGameover.png'>
-  <img src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/pieceAndMapDesign.png'>
+  <img style='margin-left:15px' src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/mapGameover.png'>
+  <img style='margin-left:15px' src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/pieceAndMapDesign.png'>
 </p>
