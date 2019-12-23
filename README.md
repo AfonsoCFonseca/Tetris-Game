@@ -32,11 +32,12 @@ Combo Line - Every time, one position of the first dimension of the array assume
 
 I started the project using the class Rectangles from Phaser to draw the map pieces
 
+<img src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/firstMap.png'>
+
 I drew a single tile in photoshop and applied a layer with 20% opacity for each color I used
 ( blue, dark blue, green, yellow, orange, red, purple and gray )
 
 <p float="left">
-  <img src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/firstMap.png'>
-  <img style='margin-left:15px' src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/mapGameover.png'>
-  <img style='margin-left:15px' src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/pieceAndMapDesign.png'>
+  <img src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/mapGameover.png'>
+  <img src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/pieceAndMapDesign.png'>
 </p>
