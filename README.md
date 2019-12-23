@@ -20,10 +20,10 @@ PieceSet
 
 ### Logic ###
 
-I've created the piece set to be represented 4x4 2D Array
-With that in mind, I've created a class named toolbox, where I've stored all the pieces and the related rotation combinations, this toolbox return a random piece to be declared to the PieceSet Class
+I've created the piece set to be represented 4x4 2D Array.
+With that in mind, I've made a class named Toolbox, where I've stored all the pieces and the related rotation combinations. This toolbox return a random piece to be declared by the PieceSet Class
 
-The Game ticks every X time, where X, starts with 500ms and decrements every two-line combo happens
+The Game ticks every X time, where X, starts with 500ms and decrements every 2x Line Combo
 The tick means that every first dimension of the array ( X-axis ) moves one position forward, so it can simulate the movement
 
 Combo Line - Every time, one position of the first dimension of the array assume the value of 3
@@ -32,7 +32,12 @@ Combo Line - Every time, one position of the first dimension of the array assume
 
 I started the project using the class Rectangles from Phaser to draw the map pieces
 
-I draw a single tile in photoshop and applied a layer with 20% opacity for each color I used
+<img src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/firstMap.png'>
+
+I drew a single tile in photoshop and applied a layer with 20% opacity for each color I used
 ( blue, dark blue, green, yellow, orange, red, purple and gray )
 
-<img src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/firstMap.png'>
+<p float="left">
+  <img src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/mapGameover.png'>
+  <img src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/pieceAndMapDesign.png'>
+</p>
