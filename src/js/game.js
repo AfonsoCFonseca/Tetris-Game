@@ -2,6 +2,7 @@ var keyD
 var keyA
 var keyW
 var keyS
+var cursors
 
 var devArrayText
 var scoreText
@@ -9,6 +10,7 @@ var levelText
 var nextPieceImage
 
 var frameInterval = 300
+var actualFrameInterval = null
 var map = null
 var ps = null
 var combos = 0 
@@ -55,6 +57,7 @@ class GameScene extends Phaser.Scene {
     ps = new PieceSet( this )
     map.mapDrawer( )
 
+    cursors = this.input.keyboard.createCursorKeys();
     keyD = this.input.keyboard.addKey("D");
     keyA = this.input.keyboard.addKey("A");
     keyW = this.input.keyboard.addKey("W");
@@ -70,27 +73,15 @@ class GameScene extends Phaser.Scene {
   update(){
 
     if( !gameOver ){
-      if (Phaser.Input.Keyboard.JustDown(keyA)){
-        ps.move('left')
-      }
-      if (Phaser.Input.Keyboard.JustDown(keyD)){
-        ps.move('right')
-      }
-
-      if (Phaser.Input.Keyboard.JustDown(keyW)){
-        ps.turn('right')
-      }
-      if (Phaser.Input.Keyboard.JustUp(keyS)){
-        ps.move('down')
-      }
+      document.addEventListener('keydown', this.keyDownHandler, false);
+      document.addEventListener('keyup', this.keyUpHandler, false);
     }
 
   }
 
-
   frame( ){
 
-      setInterval( () => {
+      setTimeout( () => {
 
         if( this.isGameOver() ){
           return;
@@ -100,9 +91,36 @@ class GameScene extends Phaser.Scene {
         map.comboVerify()
         devArrayText.setText( map.getMap() )
         map.mapDrawer( this )
+        this.frame()
 
       }, frameInterval )
   }
+
+  keyDownHandler(event) {
+
+    if(event.keyCode == 39) { // RIGHT ARROW
+        ps.move('right')
+    }
+    else if(event.keyCode == 37) { // LEFT ARROW
+        ps.move('left')
+    }
+    if(event.keyCode == 32) { // SPACE
+      ps.turn('right')
+    }
+    else if(event.keyCode == 40) { // DOWN
+      if( frameInterval != 20 ) actualFrameInterval = frameInterval
+      console.log( "keydown", actualFrameInterval)
+      frameInterval = 20
+    }
+  }
+
+  keyUpHandler( event ) {
+    if(event.keyCode == 40) {
+      frameInterval = actualFrameInterval
+      console.log( "keyup", actualFrameInterval)
+    }
+  }
+
 
   isGameOver(){
     for( var i = 0; i < map.xArrayLength; i++ ){
@@ -117,9 +135,11 @@ class GameScene extends Phaser.Scene {
   }
 
   drawGameOverScreen(){
-        const gameOverLetters = this.add.text(500 / 2 , 500, 'Game Over', { fill: '#0f0' });
+        const gameOverLetters = this.add.text( 320 / 2 , 500, 'Game Over', { fontSize: '35px', fill: '#000000' });
         gameOverLetters.setInteractive();
         gameOverLetters.on('pointerover', () => { this.restart() });
+        var rectGO = this.add.rectangle( 220 / 2 , 500, 300, 100, 0xFFFFFF ).setOrigin(0,0)
+        gameOverLetters.setDepth(12)
   }
 
   restart(){
@@ -142,29 +162,32 @@ class GameScene extends Phaser.Scene {
 
   addNextPieceImage( next_piece_name ){
     if( nextPieceImage != null ) nextPieceImage.remove()
-    nextPieceImage = this.add.image( DEV_X + 10, DEV_Y + 250 , next_piece_name ).setOrigin(0,0)
+    nextPieceImage = this.add.image( 20, 80 , next_piece_name ).setOrigin(0,0)
+    nextPieceImage.setDepth( 12 )
   }
 
 
   drawGui(){
 
-    this.add.rectangle( DEV_X + 10, DEV_Y + 250, 110, 100, 0xFFFFFF ).setOrigin(0,0)
+    var guiRect = this.add.rectangle( 20, 80, 110, 100, 0xFFFFFF ).setOrigin(0,0)
+    guiRect.setDepth( 12 )
     this.addNextPieceImage( ps.next_piece_name )
-    levelText = this.add.text( DEV_X + 15, DEV_Y+ 410, "Level: "+level, { fontSize: '20px', fill: '#FFFFFF' });
-    scoreText = this.add.text( DEV_X + 15, DEV_Y+ 380, "Score: "+score, { fontSize: '20px', fill: '#FFFFFF' });
-
+    levelText = this.add.text( 150, 80, "Level: "+level, { fontSize: '20px', fill: '#FFFFFF' });
+    scoreText = this.add.text( 150, 120, "Score: "+score, { fontSize: '20px', fill: '#FFFFFF' });
+    levelText.setDepth( 12 )
+    scoreText.setDepth( 12 )
   }
 
   drawDeveloperMap( ){
 
-      devArrayText = this.add.text( DEV_X + 150, DEV_Y+ 250, map.getMap(), { fontSize: '25px', fill: '#FFFFFF' });
+      devArrayText = this.add.text( DEV_X , DEV_Y+ 250, map.getMap(), { fontSize: '25px', fill: '#FFFFFF' });
 
   }
 
   incrSpeed(){
     combos++
     if( combos % 2 == 0 ){
-      level
+      level++
       frameInterval -= 30
     }
     score += 100

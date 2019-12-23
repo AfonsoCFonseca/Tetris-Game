@@ -57,7 +57,8 @@ class PieceSet {
         this.pieceOriention = "NORTH"
 
         if( nextPieceImage != null ) nextPieceImage.destroy()
-        nextPieceImage = this.scene.add.image( DEV_X + 10, DEV_Y + 250 , this.next_piece_name ).setOrigin(0,0)
+        nextPieceImage = this.scene.add.image( 20, 80, this.next_piece_name ).setOrigin(0,0)
+        nextPieceImage.setDepth( 12 )
 
         var { x, y } = map.getNewSetPiecePosition( this.piece )
 
