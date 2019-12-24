@@ -8,6 +8,7 @@ let gameOverLetters
 let tryAgnLetters
 let btnRetry
 let backgroundMenu 
+let instructions
 
 let frameInterval = 300
 let actualFrameInterval = null
@@ -197,6 +198,9 @@ class GameScene extends Phaser.Scene {
     scoreText = this.add.text( 150, 120, "Score: "+score, { fontSize: '20px', fill: '#FFFFFF' });
     levelText.setDepth( 12 )
     scoreText.setDepth( 12 )
+
+    instructions = this.add.text( 50, 220, "< Arrows to move and Space to turn >", { fontSize: '20px', fill: '#FFFFFF' });
+    instructions.setDepth( 12 )
   }
 
   drawDeveloperMap( ){
