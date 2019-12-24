@@ -54,12 +54,12 @@ class Map {
 		return { x, y }
 	}
 
-	clearMap(){
+	clearMap( completely ){
 
 		for( var i = 0; i < this.yArrayLength; i++ ) {
 
 			for( var j = 0; j < this.xArrayLength; j++ ){
-				if( this.tetrisMap[i][j] == 3 ) continue
+				if( !completely && this.tetrisMap[i][j] == 3 ) continue
 
 				this.tetrisMap[i][j] = 0
 			}

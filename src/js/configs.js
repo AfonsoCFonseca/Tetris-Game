@@ -3,6 +3,9 @@ const PIECE_SIZE = 50
 const MAP_MARGIN = 10
 const PIECE_SET_COLOR = 0x6666ff
 
+const MAP_WIDTH = 500 
+const MAP_HEIGHT = 1200
+
 const DEV_X = 550
 const DEV_Y = 10
 

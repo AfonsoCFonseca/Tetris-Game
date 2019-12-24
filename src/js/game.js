@@ -1,22 +1,22 @@
-var keyD
-var keyA
-var keyW
-var keyS
-var cursors
+let cursors
 
-var devArrayText
-var scoreText
-var levelText
-var nextPieceImage
+let devArrayText
+let scoreText
+let levelText
+let nextPieceImage
+let gameOverLetters
+let tryAgnLetters
+let btnRetry
+let backgroundMenu 
 
-var frameInterval = 300
-var actualFrameInterval = null
-var map = null
-var ps = null
-var combos = 0 
-var score = 0
-var level = 0
-var gameOver = false
+let frameInterval = 300
+let actualFrameInterval = null
+let map = null
+let ps = null
+let combos = 0 
+let score = 0
+let level = 0
+let gameOver = false
 
 class GameScene extends Phaser.Scene {
   constructor(){
@@ -26,9 +26,10 @@ class GameScene extends Phaser.Scene {
 
   preload(){
 
+    this.menuGameOver = this.add.group();
     this.imageGroup = this.add.group();
     this.load.image( 'background', 'assets/whiteBackground2.png' )
-    var rect = this.add.rectangle( MAP_MARGIN, MAP_MARGIN, 500, 250, 0x000000 ).setOrigin(0,0)
+    var rect = this.add.rectangle( MAP_MARGIN, MAP_MARGIN, MAP_WIDTH, 250, 0x000000 ).setOrigin(0,0)
     rect.setDepth( 10 )
 
     this.load.image( 'orange', 'assets/orange.png' )
@@ -58,10 +59,6 @@ class GameScene extends Phaser.Scene {
     map.mapDrawer( )
 
     cursors = this.input.keyboard.createCursorKeys();
-    keyD = this.input.keyboard.addKey("D");
-    keyA = this.input.keyboard.addKey("A");
-    keyW = this.input.keyboard.addKey("W");
-    keyS = this.input.keyboard.addKey("S");
 
     this.drawGui()
     this.drawDeveloperMap( )
@@ -109,7 +106,6 @@ class GameScene extends Phaser.Scene {
     }
     else if(event.keyCode == 40) { // DOWN
       if( frameInterval != 20 ) actualFrameInterval = frameInterval
-      console.log( "keydown", actualFrameInterval)
       frameInterval = 20
     }
   }
@@ -117,10 +113,8 @@ class GameScene extends Phaser.Scene {
   keyUpHandler( event ) {
     if(event.keyCode == 40) {
       frameInterval = actualFrameInterval
-      console.log( "keyup", actualFrameInterval)
     }
   }
-
 
   isGameOver(){
     for( var i = 0; i < map.xArrayLength; i++ ){
@@ -135,15 +129,42 @@ class GameScene extends Phaser.Scene {
   }
 
   drawGameOverScreen(){
-        const gameOverLetters = this.add.text( 320 / 2 , 500, 'Game Over', { fontSize: '35px', fill: '#000000' });
-        gameOverLetters.setInteractive();
-        gameOverLetters.on('pointerover', () => { this.restart() });
-        var rectGO = this.add.rectangle( 220 / 2 , 500, 300, 100, 0xFFFFFF ).setOrigin(0,0)
-        gameOverLetters.setDepth(12)
+
+      const MENU_GAMEOVER_WIDTH = 350
+      const MENU_GAMEOVER_Y = 600
+      
+      gameOverLetters = this.add.text( MENU_GAMEOVER_WIDTH / 2 - 20, MENU_GAMEOVER_Y + 10,'Game Over', { fontSize: '35px', fill: '#000000' });
+      tryAgnLetters = this.add.text( MENU_GAMEOVER_WIDTH / 2  , MENU_GAMEOVER_Y + 80 , 'Try Again', { fontSize: '25px', fill: '#000000' });
+      backgroundMenu = this.add.rectangle( (MAP_WIDTH / 2) - (MENU_GAMEOVER_WIDTH / 2), 580, MENU_GAMEOVER_WIDTH, 180,0xFFFFFF ).setOrigin(0,0)
+      btnRetry = this.add.rectangle( (MAP_WIDTH / 2) - 125 , 670, 250, 50,0xDEDEDE ).setOrigin(0,0)
+
+      this.menuGameOver.add( tryAgnLetters )
+      this.menuGameOver.add( backgroundMenu )
+      this.menuGameOver.add( btnRetry )
+      this.menuGameOver.add( gameOverLetters )
+                                             
+      tryAgnLetters.setInteractive( { useHandCursor: true  } );
+      tryAgnLetters.on('pointerdown', () => this.restart( ) );
+      // tryAgnLetters.on('pointerover', () => this.restart() );
+      gameOverLetters.setDepth( 12 )
+      tryAgnLetters.setDepth( 12 )
+
   }
 
   restart(){
-    console.log( "restarting" )
+    this.menuGameOver.clear( true )
+
+    frameInterval = 300
+    combos = 0 
+    score = 0
+    level = 0
+    gameOver = false
+    
+    map = null
+    map = new Map( this )
+    ps = new PieceSet( this )
+    this.frame()
+
   }
 
   downCicle( ){
@@ -180,7 +201,7 @@ class GameScene extends Phaser.Scene {
 
   drawDeveloperMap( ){
 
-      devArrayText = this.add.text( DEV_X , DEV_Y+ 250, map.getMap(), { fontSize: '25px', fill: '#FFFFFF' });
+    devArrayText = this.add.text( DEV_X , DEV_Y + 250, map.getMap(), { fontSize: '25px', fill: '#FFFFFF' });
 
   }
 
