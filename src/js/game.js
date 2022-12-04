@@ -134,8 +134,8 @@ class GameScene extends Phaser.Scene {
       const MENU_GAMEOVER_WIDTH = 350
       const MENU_GAMEOVER_Y = 600
       
-      gameOverLetters = this.add.text( MENU_GAMEOVER_WIDTH / 2 - 20, MENU_GAMEOVER_Y + 10,'Game Over', { fontSize: '35px', fill: '#000000' });
-      tryAgnLetters = this.add.text( MENU_GAMEOVER_WIDTH / 2  , MENU_GAMEOVER_Y + 80 , 'Try Again', { fontSize: '25px', fill: '#000000' });
+      gameOverLetters = this.add.text( MENU_GAMEOVER_WIDTH / 2 - 20, MENU_GAMEOVER_Y + 10,'Game Over', { font: 'bold 35px Geneva', color: 'black'});
+      tryAgnLetters = this.add.text( MENU_GAMEOVER_WIDTH / 2  , MENU_GAMEOVER_Y + 80 , 'Try Again', { font: 'bold 25px Geneva', color: 'black'});
       backgroundMenu = this.add.rectangle( (MAP_WIDTH / 2) - (MENU_GAMEOVER_WIDTH / 2), 580, MENU_GAMEOVER_WIDTH, 180,0xFFFFFF ).setOrigin(0,0)
       btnRetry = this.add.rectangle( (MAP_WIDTH / 2) - 125 , 670, 250, 50,0xDEDEDE ).setOrigin(0,0)
 
@@ -194,18 +194,18 @@ class GameScene extends Phaser.Scene {
     var guiRect = this.add.rectangle( 20, 80, 110, 100, 0xFFFFFF ).setOrigin(0,0)
     guiRect.setDepth( 12 )
     this.addNextPieceImage( ps.next_piece_name )
-    levelText = this.add.text( 150, 80, "Level: "+level, { fontSize: '20px', fill: '#FFFFFF' });
-    scoreText = this.add.text( 150, 120, "Score: "+score, { fontSize: '20px', fill: '#FFFFFF' });
+    levelText = this.add.text( 150, 80, "Level: "+level, { font: 'bold 20px Geneva', color: 'white'});
+    scoreText = this.add.text( 150, 120, "Score: "+score, { font: 'bold 20px Geneva', color: 'white'} );
     levelText.setDepth( 12 )
     scoreText.setDepth( 12 )
 
-    instructions = this.add.text( 50, 220, "< Arrows to move and Space to turn >", { fontSize: '20px', fill: '#FFFFFF' });
+    instructions = this.add.text( 50, 220, "< Arrows to move and Space to turn >", { font: 'bold 20px Geneva', color: 'white'} );
     instructions.setDepth( 12 )
   }
 
   drawDeveloperMap( ){
 
-    devArrayText = this.add.text( DEV_X , DEV_Y + 250, map.getMap(), { fontSize: '25px', fill: '#FFFFFF' });
+    devArrayText = this.add.text( DEV_X , DEV_Y + 250, map.getMap(), { font: 'bold 25px Geneva', color: 'white'});
 
   }
 

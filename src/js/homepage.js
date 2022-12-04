@@ -89,7 +89,7 @@
 
         this.physics.add.overlap( player, stars, collectStar, null, this )
 
-        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+        scoreText = this.add.text(16, 16, 'score: 0', { font: 'bold 32px Geneva', color: 'white'});
 
         bombs = this.physics.add.group()
         this.physics.add.collider( bombs, platforms )
