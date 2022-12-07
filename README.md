@@ -55,8 +55,3 @@ I drew a single tile in photoshop and applied a layer with 20% opacity for each 
   <img src='https://github.com/AfonsoCFonseca/Tetris-Game/blob/master/screenshots/pieceAndMapDesign.png'>
 </p>
 
-
-## URL ##
-
-Final build running at: 
-https://tetrisgame1991.herokuapp.com/
